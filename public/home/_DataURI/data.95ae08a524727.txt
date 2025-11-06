@@ -1,0 +1,1 @@
+chrome-extension://fmkadmapgofadopljbjfkapdkoienihi/node_modules/compare-versions/lib/esm/index.js
