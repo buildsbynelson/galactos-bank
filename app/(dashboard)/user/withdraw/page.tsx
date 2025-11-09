@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -12,6 +12,9 @@ import { Wallet, ArrowDownToLine, Check } from "lucide-react"
 export default function WithdrawPage() {
   const [isWithdrawing, setIsWithdrawing] = useState(false)
   const [withdrawSuccess, setWithdrawSuccess] = useState(false)
+  const [, setError] = useState("")
+  const [currentBalance, setCurrentBalance] = useState<number | null>(null)
+  const [balanceLoading, setBalanceLoading] = useState(true)
   const [formData, setFormData] = useState({
     amount: "",
     method: "bank",
@@ -19,7 +22,27 @@ export default function WithdrawPage() {
     notes: ""
   })
 
-  const currentBalance = 13250.00
+     // Fetch user balance on component mount
+     useEffect(() => {
+       const fetchBalance = async () => {
+         try {
+           const response = await fetch('/api/user/balance')
+           const data = await response.json()
+           
+           if (response.ok) {
+             setCurrentBalance(data.balance)
+           } else {
+             setError("Failed to load balance")
+           }
+         } catch (err) {
+           setError("Error loading balance")
+         } finally {
+           setBalanceLoading(false)
+         }
+       }
+   
+       fetchBalance()
+     }, [])
 
   const handleWithdraw = () => {
     setIsWithdrawing(true)
@@ -71,7 +94,16 @@ export default function WithdrawPage() {
             Available Balance
           </CardTitle>
           <CardDescription className="text-2xl font-bold text-foreground">
-            ${currentBalance.toFixed(2)}
+            {balanceLoading ? (
+              <span className="text-muted-foreground">Loading...</span>
+            ) : currentBalance !== null ? (
+              `$${currentBalance.toLocaleString('en-US', { 
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2 
+              })}`
+            ) : (
+              <span className="text-destructive">Error loading balance</span>
+            )}
           </CardDescription>
         </CardHeader>
       </Card>
@@ -102,8 +134,8 @@ export default function WithdrawPage() {
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-                Maximum withdrawal: ${currentBalance.toFixed(2)}
-              </p>
+  Maximum withdrawal: ${currentBalance !== null ? currentBalance.toFixed(2) : '0.00'}
+</p>
             </div>
 
             <div className="space-y-2">

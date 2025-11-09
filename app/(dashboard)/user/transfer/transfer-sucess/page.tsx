@@ -34,7 +34,7 @@ export default function TransactionSuccessPage() {
 
   const handleViewDetails = () => {
     if (transferResult) {
-      router.push(`/dashboard/transfer/receipt`)
+      router.push(`/user/transfer/transfer-recipt`)
     }
   }
 

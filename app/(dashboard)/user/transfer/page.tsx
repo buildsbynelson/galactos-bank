@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -11,22 +11,44 @@ import { Textarea } from "@/components/ui/textarea"
 
 export default function TransferPage() {
   const router = useRouter();
-  const [, setError] = useState("")
-  const [loading] = useState(false)
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [currentBalance, setCurrentBalance] = useState<number | null>(null)
+  const [balanceLoading, setBalanceLoading] = useState(true)
   const [formData, setFormData] = useState({
     recipientName: "",
-    accountNumber: "",
+    receiverAccountNumber: "",
     amount: "",
     description: ""
   })
 
-  const currentBalance = 13250.00
+  // Fetch user balance on component mount
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch('/api/user/balance')
+        const data = await response.json()
+        
+        if (response.ok) {
+          setCurrentBalance(data.balance)
+        } else {
+          setError("Failed to load balance")
+        }
+      } catch (err) {
+        setError("Error loading balance")
+      } finally {
+        setBalanceLoading(false)
+      }
+    }
+
+    fetchBalance()
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
 
-    if (!formData.accountNumber || !formData.amount) {
+    if (!formData.recipientName || !formData.receiverAccountNumber || !formData.amount) {
       setError("Please fill in all required fields.")
       return
     }
@@ -37,25 +59,37 @@ export default function TransferPage() {
       return
     }
 
-    if (amount > currentBalance) {
+    if (currentBalance !== null && amount > currentBalance) {
       setError("Insufficient balance for this transfer.")
       return
     }
 
-    if (formData.accountNumber.length !== 8) {
+    if (formData.receiverAccountNumber.length !== 8) {
       setError("Account number must be 8 digits.")
+      return
     }
-    // proceed with transfer... and store transfer data in sessionStorage and redirect to pin
+    
+    // Store transfer data in sessionStorage and redirect to pin
     sessionStorage.setItem("transferData", JSON.stringify(formData))
     router.push("/user/transfer/pin")
-
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value
-    })
+    const { name, value } = e.target
+    
+    // For account number, only allow digits
+    if (name === "receiverAccountNumber") {
+      const digitsOnly = value.replace(/\D/g, '')
+      setFormData({
+        ...formData,
+        [name]: digitsOnly
+      })
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      })
+    }
   }
 
   return (
@@ -67,13 +101,20 @@ export default function TransferPage() {
         </p>
       </div>
 
-      
-
       <Card>
         <CardHeader>
           <CardTitle>Available Balance</CardTitle>
           <CardDescription className="text-2xl font-bold text-foreground">
-            ${currentBalance.toFixed(2)}
+            {balanceLoading ? (
+              <span className="text-muted-foreground">Loading...</span>
+            ) : currentBalance !== null ? (
+              `$${currentBalance.toLocaleString('en-US', { 
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2 
+              })}`
+            ) : (
+              <span className="text-destructive">Error loading balance</span>
+            )}
           </CardDescription>
         </CardHeader>
       </Card>
@@ -86,11 +127,18 @@ export default function TransferPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {error && (
+            <div className="mb-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="recipientName">Recipient Name</Label>
               <Input
                 id="recipientName"
+                name="recipientName"
                 placeholder="Enter recipient's full name"
                 value={formData.recipientName}
                 onChange={handleChange}
@@ -99,12 +147,14 @@ export default function TransferPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="accountNumber">Account Number</Label>
+              <Label htmlFor="receiverAccountNumber">Account Number</Label>
               <Input
-                id="accountNumber"
+                id="receiverAccountNumber"
+                name="receiverAccountNumber"
                 placeholder="Enter recipient's account number"
-                value={formData.accountNumber}
+                value={formData.receiverAccountNumber}
                 onChange={handleChange}
+                maxLength={8}
                 required
               />
             </div>
@@ -117,6 +167,7 @@ export default function TransferPage() {
                 </span>
                 <Input
                   id="amount"
+                  name="amount"
                   type="number"
                   step="0.01"                    
                   placeholder="0.00"
@@ -132,6 +183,7 @@ export default function TransferPage() {
               <Label htmlFor="description">Description (Optional)</Label>
               <Textarea
                 id="description"
+                name="description"
                 placeholder="What's this transfer for?"
                 value={formData.description}
                 onChange={handleChange}
@@ -154,7 +206,7 @@ export default function TransferPage() {
             <Button
               type="submit"
               className="w-full"
-              disabled={loading}
+              disabled={loading || balanceLoading || currentBalance === null}
             >
               {loading ? "Processing..." : "Transfer Funds"}
             </Button>

@@ -45,7 +45,7 @@ export default function PinConfirmationPage() {
   }
 
     if (!pin || pin.length < 4) {
-      setError("Please enter your 4-6 digit PIN")
+      setError("Please enter your 4 digit PIN")
       setLoading(false)
       return
     }
@@ -73,7 +73,7 @@ export default function PinConfirmationPage() {
       // Store transaction result and redirect to success page
       sessionStorage.setItem("transferResult", JSON.stringify(data))
       sessionStorage.removeItem("transferData") // Clean up
-      router.push("/dashboard/transfer/success")
+      router.push("/user/transfer/transfer-sucess")
     } catch {
       setError("Network error. Please try again.")
       setLoading(false)

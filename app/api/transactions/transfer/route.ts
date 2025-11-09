@@ -12,12 +12,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { receiverAccountNumber, amount, pin, description } = await request.json();
+    const { receiverAccountNumber, recipientName, amount, pin, description } = await request.json();
 
     // Validate inputs
     if (!receiverAccountNumber || !amount || !pin) {
       return NextResponse.json(
         { error: "All fields required" },
+        { status: 400 }
+      );
+    }
+
+    // Validate account number is 8 digits
+    if (receiverAccountNumber.length !== 8 || !/^\d+$/.test(receiverAccountNumber)) {
+      return NextResponse.json(
+        { error: "Account number must be 8 digits" },
         { status: 400 }
       );
     }
@@ -30,55 +38,51 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use Prisma transaction for atomicity
+    // Get sender and validate PIN OUTSIDE the transaction
+    const sender = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        id: true,
+        name: true,
+        accountNumber: true,
+        balance: true,
+        pin: true,
+      }
+    });
+
+    if (!sender) {
+      return NextResponse.json(
+        { error: "Sender not found" },
+        { status: 404 }
+      );
+    }
+
+    // Validate PIN before transaction
+    if (!sender.pin || !(await bcrypt.compare(pin, sender.pin))) {
+      return NextResponse.json(
+        { error: "Invalid PIN" },
+        { status: 401 }
+      );
+    }
+
+    // Check balance before transaction
+    const senderBalance = parseFloat(sender.balance.toString());
+    if (senderBalance < transferAmount) {
+      return NextResponse.json(
+        { error: "Insufficient balance" },
+        { status: 400 }
+      );
+    }
+
+    // Execute transaction - only update sender's balance
     const result = await prisma.$transaction(async (tx) => {
-      // Get sender with lock (prevents concurrent modifications)
-      const sender = await tx.user.findUnique({
-        where: { id: session.user.id },
-      });
-
-      if (!sender) {
-        throw new Error("Sender not found");
-      }
-
-      // Validate PIN
-      if (!sender.pin || !(await bcrypt.compare(pin, sender.pin))) {
-        throw new Error("Invalid PIN");
-      }
-
-      // Check balance
-      const senderBalance = parseFloat(sender.balance.toString());
-      if (senderBalance < transferAmount) {
-        throw new Error("Insufficient balance");
-      }
-
-      // Get receiver
-      const receiver = await tx.user.findUnique({
-        where: { accountNumber: receiverAccountNumber },
-      });
-
-      if (!receiver) {
-        throw new Error("Receiver account not found");
-      }
-
-      if (sender.id === receiver.id) {
-        throw new Error("Cannot transfer to yourself");
-      }
-
-      // Calculate new balances
+      // Calculate new balance
       const newSenderBalance = senderBalance - transferAmount;
-      const newReceiverBalance = parseFloat(receiver.balance.toString()) + transferAmount;
 
-      // Update sender balance
+      // Update sender balance only
       await tx.user.update({
         where: { id: sender.id },
         data: { balance: new Decimal(newSenderBalance) },
-      });
-
-      // Update receiver balance
-      await tx.user.update({
-        where: { id: receiver.id },
-        data: { balance: new Decimal(newReceiverBalance) },
       });
 
       // Create transaction record
@@ -89,13 +93,11 @@ export async function POST(request: NextRequest) {
           amount: new Decimal(transferAmount),
           type: "TRANSFER",
           status: "COMPLETED",
-          description: description || `Transfer to ${receiver.name}`,
+          description: description || `Transfer to ${receiverAccountNumber}`,
           senderId: sender.id,
           senderName: sender.name,
           senderAccount: sender.accountNumber,
-          receiverId: receiver.id,
-          receiverName: receiver.name,
-          receiverAccount: receiver.accountNumber,
+          receiverAccount: receiverAccountNumber,
           balanceBefore: sender.balance,
           balanceAfter: new Decimal(newSenderBalance),
         },
@@ -105,13 +107,22 @@ export async function POST(request: NextRequest) {
         transaction,
         newBalance: newSenderBalance,
       };
+    }, {
+      maxWait: 5000,
+      timeout: 10000,
     });
 
     return NextResponse.json({
       success: true,
       message: "Transfer successful",
-      newBalance: result.newBalance,
-      reference: result.transaction.reference,
+      transaction: {
+        reference: result.transaction.reference,
+        date: result.transaction.createdAt.toISOString(),
+        receiver: recipientName, // Since we're not checking receiver, use placeholder
+        receiverAccount: receiverAccountNumber,
+        amount: transferAmount.toString(),
+        balanceAfter: result.newBalance.toString(),
+      }
     });
   } catch (error: unknown) {
     console.error("Transfer error:", error);
