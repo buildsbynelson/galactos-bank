@@ -12,7 +12,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { receiverAccountNumber, amount, pin, description } = await request.json();
+    const { receiverAccountNumber, amount, pin, description, recipientName, bankName, imfVerified } = await request.json();
+
+    console.log("Received transfer request:", { recipientName, bankName, receiverAccountNumber, amount });
 
     // Validate inputs
     if (!receiverAccountNumber || !amount || !pin) {
@@ -23,9 +25,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate account number is 8 digits
-    if (receiverAccountNumber.length !== 8 || !/^\d+$/.test(receiverAccountNumber)) {
+    if (receiverAccountNumber.length < 8 || !/^\d+$/.test(receiverAccountNumber)) {
       return NextResponse.json(
-        { error: "Account number must be 8 digits" },
+        { error: "Account number must be at least 8 digits" },
         { status: 400 }
       );
     }
@@ -58,19 +60,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // CRITICAL: Check if account is restricted BEFORE allowing transfer
-    if (sender.isRestricted) {
-      return NextResponse.json(
-        { error: "ACCOUNT_RESTRICTED" },
-        { status: 403 }
-      );
-    }
-
     // Validate PIN before transaction
     if (!sender.pin || !(await bcrypt.compare(pin, sender.pin))) {
       return NextResponse.json(
         { error: "Invalid PIN" },
         { status: 401 }
+      );
+    }
+
+    // CRITICAL: Check if account is restricted AND IMF not verified
+    if (sender.isRestricted && !imfVerified) {
+      return NextResponse.json(
+        { 
+          error: "ACCOUNT_RESTRICTED",
+          message: "IMF verification required to complete this transfer"
+        },
+        { status: 403 }
       );
     }
 
@@ -83,7 +88,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create pending transaction (no balance update yet)
+    // Create pending transaction (NO balance update - admin will approve)
     const txnRef = generateTransactionRef();
     const transaction = await prisma.transaction.create({
       data: {
@@ -91,34 +96,44 @@ export async function POST(request: NextRequest) {
         amount: new Decimal(transferAmount),
         type: "TRANSFER",
         status: "PENDING",
-        description: description || `Transfer to ${receiverAccountNumber}`,
+        description: description || `Transfer to ${recipientName || receiverAccountNumber}${bankName ? ` via ${bankName}` : ''}`,
         senderId: sender.id,
         senderName: sender.name,
         senderAccount: sender.accountNumber,
+        receiverName: recipientName || null,
         receiverAccount: receiverAccountNumber,
         balanceBefore: sender.balance,
-        balanceAfter: sender.balance,
+        balanceAfter: sender.balance, // Balance stays same until approved
       },
     });
 
-    return NextResponse.json({
+    // ✅ CRITICAL FIX: Return exact structure that success page expects
+    const responseData = {
       success: true,
       message: "Transfer submitted for approval",
       transaction: {
         reference: transaction.reference,
         date: transaction.createdAt.toISOString(),
-        receiver: "Pending Verification",
+        senderAccount: sender.accountNumber,
+        receiver: recipientName || "Pending Verification",
         receiverAccount: receiverAccountNumber,
+        bankName: bankName || "Not Specified",
         amount: transferAmount.toString(),
+        balanceBefore: senderBalance.toString(),
         balanceAfter: senderBalance.toString(),
         status: "PENDING",
       }
-    });
+    };
+
+    console.log("API Response:", responseData);
+
+    return NextResponse.json(responseData);
+
   } catch (error: unknown) {
     console.error("Transfer error:", error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Transfer failed" },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }

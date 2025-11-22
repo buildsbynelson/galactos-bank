@@ -8,7 +8,7 @@ import {
   IconFileWord,
   IconInnerShadowTop,
   IconReport,
-  IconSettings,
+  IconHelpCircle,
   IconUsers,
 } from "@tabler/icons-react"
 
@@ -105,9 +105,9 @@ const userData = {
 
 const navSecondary = [
   {
-    title: "Settings",
-    url: "#",
-    icon: IconSettings,
+    title: "Support",
+    url: "mailto:support.galactostrustbacorp@gmail.com?subject=Support Request - GalactosTrust Bank",
+    icon: IconHelpCircle,
   },
 ]
 

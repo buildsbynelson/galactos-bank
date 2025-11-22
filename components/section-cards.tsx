@@ -1,6 +1,6 @@
-// Remove "use client" - make it a server component
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
+import { IconTrendingUp } from "@tabler/icons-react"
 import { Badge } from "@/components/ui/badge"
+
 import {
   Card,
   CardAction,
@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { prisma } from "@/lib/prisma"
+import { RegenerateIMFButton } from "@/components/regenerate-imf-button"
 
 export async function SectionCards() {
   // Fetch data directly in the component
@@ -29,11 +30,36 @@ export async function SectionCards() {
     },
   })
 
+  // Fetch IMF code from database
+  let imfCode = "IMF-0000"
+  try {
+    const imfSetting = await prisma.systemSettings.findUnique({
+      where: { key: "imf_code" }
+    })
+    
+    if (imfSetting) {
+      imfCode = imfSetting.value
+    } else {
+      // Create initial IMF code if it doesn't exist
+      const randomDigits = Math.floor(1000 + Math.random() * 9000)
+      imfCode = `IMF-${randomDigits}`
+      
+      await prisma.systemSettings.create({
+        data: {
+          key: "imf_code",
+          value: imfCode
+        }
+      })
+    }
+  } catch (error) {
+    console.error("Error fetching IMF code:", error)
+  }
+
   const stats = {
     totalBalance: parseFloat(totalBalance._sum.balance?.toString() || "0"),
     totalUsers,
     activeAccounts,
-    pendingVerification: totalUsers - activeAccounts,
+    imfCode,
   }
 
   return (
@@ -114,23 +140,20 @@ export async function SectionCards() {
 
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Pending Verification</CardDescription>
+          <CardDescription>IMF Verification Code</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            {stats.pendingVerification.toLocaleString()}
+            {stats.imfCode}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline">
-              <IconTrendingDown />
-              Pending
-            </Badge>
+            <RegenerateIMFButton currentCode={stats.imfCode} />
           </CardAction>
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Awaiting verification
+            Current verification code
           </div>
           <div className="text-muted-foreground">
-            Users need to verify email
+            Valid until regenerated
           </div>
         </CardFooter>
       </Card>

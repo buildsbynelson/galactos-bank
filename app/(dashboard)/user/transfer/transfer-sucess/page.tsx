@@ -7,30 +7,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Download, Share2, CheckCircle2, ArrowLeft, Home } from "lucide-react"
 
-// 1. ADD BANKS ARRAY HERE
-const banks = [
-  { value: "chase-bank", label: "Chase Bank" },
-  { value: "bank-of-america", label: "Bank of America" },
-  { value: "wells-fargo", label: "Wells Fargo" },
-  { value: "citibank", label: "Citibank" },
-  { value: "us-bank", label: "U.S. Bank" },
-  { value: "pnc-bank", label: "PNC Bank" },
-  { value: "capital-one", label: "Capital One" },
-  { value: "truist-bank", label: "Truist Bank" },
-  { value: "td-bank", label: "TD Bank" },
-  { value: "ally-bank", label: "Ally Bank" },
-  { value: "barclays", label: "Barclays" },
-  { value: "hsbc-uk", label: "HSBC UK" },
-  { value: "lloyds-bank", label: "Lloyds Bank" },
-  { value: "natwest", label: "NatWest" },
-  { value: "santander-uk", label: "Santander UK" },
-  { value: "tsb-bank", label: "TSB Bank" },
-  { value: "monzo-bank", label: "Monzo Bank" },
-  { value: "starling-bank", label: "Starling Bank" },
-  { value: "metro-bank", label: "Metro Bank" },
-  { value: "revolut", label: "Revolut" },
-];
-
 interface TransferResult {
   transaction: {
     reference: string;
@@ -41,38 +17,26 @@ interface TransferResult {
     amount: string;
     balanceBefore: string;
     balanceAfter: string;
-    bank?: string; // 2. ADD THIS IF YOUR API SENDS IT
+    bankName?: string;
   };
 }
 
 export default function TransactionReceiptPage() {
   const router = useRouter()
   const [transferResult, setTransferResult] = useState<TransferResult | null>(null)
-  const [recipientBank, setRecipientBank] = useState<string>("")
   const [loading, setLoading] = useState(true)
-
-  // 3. ADD HELPER FUNCTION HERE
-  const getBankLabel = (bankValue: string): string => {
-    const bank = banks.find(b => b.value === bankValue);
-    return bank ? bank.label : bankValue;
-  };
 
   useEffect(() => {
     const result = sessionStorage.getItem("transferResult")
     if (!result) {
-      router.push("/dashboard/transfer")
+      router.push("/user/transfer")
       return
     }
     const parsedResult = JSON.parse(result)
+    console.log("Transfer Result from sessionStorage:", parsedResult)
+    console.log("Receiver Name:", parsedResult.transaction?.receiver)
+    console.log("Bank Name:", parsedResult.transaction?.bankName)
     setTransferResult(parsedResult)
-
-    // 4. GET BANK FROM TRANSFER DATA (stored before pin page)
-    const transferData = sessionStorage.getItem("transferData")
-    if (transferData) {
-      const parsed = JSON.parse(transferData)
-      setRecipientBank(parsed.bank || "")
-    }
-    
     setLoading(false)
   }, [router])
 
@@ -92,7 +56,7 @@ Account: ${transferResult.transaction.senderAccount || 'Your Account'}
 
 RECIPIENT INFORMATION  
 Name: ${transferResult.transaction.receiver}
-Bank: ${recipientBank ? getBankLabel(recipientBank) : 'N/A'}
+Bank: ${transferResult.transaction.bankName || 'Not Specified'}
 Account: ${transferResult.transaction.receiverAccount}
 
 PAYMENT DETAILS
@@ -121,10 +85,10 @@ Status: COMPLETED
     if (navigator.share) {
       navigator.share({
         title: 'Transaction Receipt',
-        text: `Transfer of $${parseFloat(transferResult.transaction.amount).toFixed(2)} to ${transferResult.transaction.receiver} at ${recipientBank ? getBankLabel(recipientBank) : 'their bank'}. Reference: ${transferResult.transaction.reference}`,
+        text: `Transfer of $${parseFloat(transferResult.transaction.amount).toFixed(2)} to ${transferResult.transaction.receiver} at ${transferResult.transaction.bankName || 'Bank'}. Reference: ${transferResult.transaction.reference}`,
       }).catch((err) => console.log('Share failed:', err))
     } else {
-      const text = `Transfer Receipt\nAmount: $${parseFloat(transferResult.transaction.amount).toFixed(2)}\nTo: ${transferResult.transaction.receiver}\nBank: ${recipientBank ? getBankLabel(recipientBank) : 'N/A'}\nReference: ${transferResult.transaction.reference}`
+      const text = `Transfer Receipt\nAmount: $${parseFloat(transferResult.transaction.amount).toFixed(2)}\nTo: ${transferResult.transaction.receiver}\nBank: ${transferResult.transaction.bankName || 'Not Specified'}\nReference: ${transferResult.transaction.reference}`
       navigator.clipboard.writeText(text)
       alert('Receipt details copied to clipboard!')
     }
@@ -133,7 +97,7 @@ Status: COMPLETED
   const handleBackToDashboard = () => {
     sessionStorage.removeItem("transferResult")
     sessionStorage.removeItem("transferData") // Clean up transfer data too
-    router.push("/dashboard")
+    router.push("/user")
   }
 
   if (loading) {
@@ -155,7 +119,7 @@ Status: COMPLETED
     time: new Date(transferResult.transaction.date).toLocaleTimeString(),
     recipient: {
       name: transferResult.transaction.receiver,
-      bank: recipientBank,
+      bankName: transferResult.transaction.bankName || "Not Specified",
       accountNumber: transferResult.transaction.receiverAccount,
     },
     amount: parseFloat(transferResult.transaction.amount),
@@ -228,13 +192,10 @@ Status: COMPLETED
                 <span className="text-sm text-muted-foreground">Account Name</span>
                 <span className="font-medium">{receiptData.recipient.name}</span>
               </div>
-              {/* 5. ADD THIS BANK DISPLAY */}
-              {receiptData.recipient.bank && (
-                <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">Bank</span>
-                  <span className="font-medium">{getBankLabel(receiptData.recipient.bank)}</span>
-                </div>
-              )}
+              <div className="flex justify-between">
+                <span className="text-sm text-muted-foreground">Bank</span>
+                <span className="font-medium">{receiptData.recipient.bankName}</span>
+              </div>
               <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Account Number</span>
                 <span className="font-mono text-sm font-medium">{receiptData.recipient.accountNumber}</span>

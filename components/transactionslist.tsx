@@ -128,7 +128,7 @@ export default function TransactionsList({ transactions }: TransactionsListProps
             <div className="flex flex-col items-center justify-center py-12">
               <p className="text-muted-foreground">No transactions found</p>
               <Button asChild className="mt-4">
-                <Link href="/dashboard/transfer">Make a Transfer</Link>
+                <Link href="/user/transfer">Make a Transfer</Link>
               </Button>
             </div>
           ) : (
@@ -187,7 +187,7 @@ export default function TransactionsList({ transactions }: TransactionsListProps
                       size="icon"
                       asChild
                     >
-                      <Link href={`/dashboard/transactions/${transaction.reference}`}>
+                      <Link href={`/user/transfer/transfer-recipt/${transaction.id}`}>
                         <IconEye className="h-4 w-4" />
                       </Link>
                     </Button>
