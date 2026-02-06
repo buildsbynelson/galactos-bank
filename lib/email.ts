@@ -12,6 +12,11 @@ interface UserData {
   accountName: string;
 }
 
+interface PasswordResetData {
+  name: string;
+  email: string;
+}
+
 export async function sendVerificationEmail(
   userData: UserData,
   verificationToken: string
@@ -178,6 +183,120 @@ export async function sendVerificationEmail(
     if (error) {
       console.error('Email sending error:', error);
       throw new Error('Failed to send verification email');
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error('Email service error:', error);
+    throw error;
+  }
+}
+
+export async function sendPasswordResetEmail(
+  userData: PasswordResetData,
+  resetToken: string
+) {
+  const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${resetToken}`;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'noreply@yourdomain.com',
+      to: userData.email,
+      subject: 'Reset Your Password - Galactos Trust Bank Corp',
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+              }
+              .header {
+                background-color: #1e40af;
+                color: white;
+                padding: 20px;
+                text-align: center;
+                border-radius: 5px 5px 0 0;
+              }
+              .content {
+                background-color: white;
+                padding: 30px;
+                border-radius: 0 0 5px 5px;
+              }
+              .warning-box {
+                background-color: #fef3c7;
+                padding: 15px;
+                margin: 20px 0;
+                border-radius: 5px;
+                border-left: 4px solid #f59e0b;
+              }
+              .button {
+                display: inline-block;
+                padding: 12px 30px;
+                background-color: #1e40af;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                margin: 20px 0;
+              }
+              .footer {
+                text-align: center;
+                margin-top: 20px;
+                color: #666;
+                font-size: 12px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>🔐 Password Reset Request</h1>
+              </div>
+              <div class="content">
+                <h2>Hello ${userData.name},</h2>
+                <p>We received a request to reset your password for your Galactos Trust Bank Corp account.</p>
+                
+                <p>Click the button below to create a new password:</p>
+                
+                <div style="text-align: center;">
+                  <a href="${resetUrl}" class="button">Reset Password</a>
+                </div>
+
+                <p style="color: #666; font-size: 14px; margin-top: 20px;">
+                  Or copy and paste this link into your browser:<br>
+                  <a href="${resetUrl}">${resetUrl}</a>
+                </p>
+
+                <div class="warning-box">
+                  <p style="margin: 0; font-weight: bold; color: #f59e0b;">⚠️ Security Notice</p>
+                  <p style="margin: 5px 0 0 0; font-size: 14px;">This link will expire in 1 hour for your security.</p>
+                </div>
+
+                <p style="color: #999; font-size: 12px; margin-top: 30px;">
+                  If you didn't request a password reset, please ignore this email or contact support if you have concerns about your account security.
+                </p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2025 GalactosTrustbaCorp. All rights reserved.</p>
+                <p>This is an automated email. Please do not reply.</p>
+              </div>
+            </div>
+          </body>
+        </html>
+      `,
+    });
+
+    if (error) {
+      console.error('Password reset email error:', error);
+      throw new Error('Failed to send password reset email');
     }
 
     return { success: true, data };
