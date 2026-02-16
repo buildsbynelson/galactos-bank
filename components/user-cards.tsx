@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from 'next-intl'
 import { IconEye, IconEyeOff, IconCopy, IconCheck } from "@tabler/icons-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -20,6 +21,7 @@ interface UserCardsProps {
 }
 
 export default function UserCards({ accountNumber, accountName, balance }: UserCardsProps) {
+  const t = useTranslations('UserCards')
   const [isBalanceVisible, setIsBalanceVisible] = useState(true)
   const [isCopied, setIsCopied] = useState(false)
   
@@ -33,7 +35,7 @@ export default function UserCards({ accountNumber, accountName, balance }: UserC
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card flex flex-col gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Account Balance</CardDescription>
+          <CardDescription>{t('accountBalance')}</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {isBalanceVisible
              ? `$${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
@@ -80,22 +82,22 @@ export default function UserCards({ accountNumber, accountName, balance }: UserC
       
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Quick Actions</CardDescription>
+          <CardDescription>{t('quickActions')}</CardDescription>
           <CardTitle className="text-xl font-semibold">
-            Manage Your Account
+            {t('manageAccount')}
           </CardTitle>
         </CardHeader>
         <CardFooter className="flex flex-col gap-2">
           <Button className="w-full" variant="default" asChild>
-            <Link href="/user/deposit">Deposit</Link>
+            <Link href="/user/deposit">{t('deposit')}</Link>
           </Button>
           
           <Button className="w-full" variant="default" asChild>
-            <Link href="/user/transfer">Transfer</Link>
+            <Link href="/user/transfer">{t('transfer')}</Link>
           </Button>
           
           <Button className="w-full" variant="default" asChild>
-            <Link href="/user/withdraw">Withdraw</Link>
+            <Link href="/user/withdraw">{t('withdraw')}</Link>
           </Button>
         </CardFooter>
       </Card>

@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/session"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
+import { getTranslations } from 'next-intl/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -13,7 +14,6 @@ export default async function ProfilePage() {
     redirect("/login")
   }
 
-  // Fetch user data
   const user = await prisma.user.findUnique({
     where: { id: session.user.id },
     select: {
@@ -34,12 +34,12 @@ export default async function ProfilePage() {
     redirect("/login")
   }
 
-  // Split name into first and last
+  const t = await getTranslations('ProfilePage')
+
   const nameParts = user.name.split(' ')
   const firstName = nameParts[0] || ''
   const lastName = nameParts.slice(1).join(' ') || ''
   
-  // Get initials
   const initials = user.name
     .split(' ')
     .map(word => word[0])
@@ -68,17 +68,17 @@ export default async function ProfilePage() {
   return (
     <div className="container mx-auto max-w-4xl space-y-6 p-4 lg:p-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground">
-          Manage your account information and preferences
+          {t('description')}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Profile Picture</CardTitle>
+          <CardTitle>{t('profilePicture.title')}</CardTitle>
           <CardDescription>
-            Upload or update your profile picture
+            {t('profilePicture.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -92,15 +92,15 @@ export default async function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Personal Information</CardTitle>
+          <CardTitle>{t('personalInfo.title')}</CardTitle>
           <CardDescription>
-            Your personal details and contact information
+            {t('personalInfo.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">{t('personalInfo.firstName')}</Label>
               <Input 
                 id="firstName" 
                 value={userProfile.firstName} 
@@ -109,7 +109,7 @@ export default async function ProfilePage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">{t('personalInfo.lastName')}</Label>
               <Input 
                 id="lastName" 
                 value={userProfile.lastName} 
@@ -120,7 +120,7 @@ export default async function ProfilePage() {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('personalInfo.email')}</Label>
             <div className="flex gap-2">
               <Input 
                 id="email" 
@@ -131,32 +131,32 @@ export default async function ProfilePage() {
               />
               {userProfile.emailVerified ? (
                 <span className="inline-flex items-center px-3 text-sm text-green-600 bg-green-50 rounded-md">
-                  Verified
+                  {t('personalInfo.verified')}
                 </span>
               ) : (
                 <span className="inline-flex items-center px-3 text-sm text-yellow-600 bg-yellow-50 rounded-md">
-                  Not Verified
+                  {t('personalInfo.notVerified')}
                 </span>
               )}
             </div>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone Number</Label>
+            <Label htmlFor="phone">{t('personalInfo.phone')}</Label>
             <Input 
               id="phone" 
               type="tel" 
-              value={userProfile.phone || 'Not provided'} 
+              value={userProfile.phone || t('personalInfo.notProvided')} 
               readOnly 
               className="bg-muted"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="country">Country</Label>
+            <Label htmlFor="country">{t('personalInfo.country')}</Label>
             <Input 
               id="country" 
-              value={userProfile.country || 'Not provided'} 
+              value={userProfile.country || t('personalInfo.notProvided')} 
               readOnly 
               className="bg-muted"
             />
@@ -166,14 +166,14 @@ export default async function ProfilePage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Account Information</CardTitle>
+          <CardTitle>{t('accountInfo.title')}</CardTitle>
           <CardDescription>
-            View your account details
+            {t('accountInfo.description')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Account Number</Label>
+            <Label>{t('accountInfo.accountNumber')}</Label>
             <Input 
               readOnly 
               value={userProfile.accountNumber} 
@@ -182,7 +182,7 @@ export default async function ProfilePage() {
           </div>
           
           <div className="space-y-2">
-            <Label>Current Balance</Label>
+            <Label>{t('accountInfo.currentBalance')}</Label>
             <Input 
               readOnly 
               value={`$${userProfile.balance.toLocaleString('en-US', { 
@@ -194,10 +194,10 @@ export default async function ProfilePage() {
           </div>
 
           <div className="space-y-2">
-            <Label>Account Type</Label>
+            <Label>{t('accountInfo.accountType')}</Label>
             <Input 
               readOnly 
-              value="Digital Banking Account" 
+              value={t('accountInfo.accountTypeValue')} 
               className="bg-muted" 
             />
           </div>
@@ -207,10 +207,10 @@ export default async function ProfilePage() {
       <Card className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
         <CardContent className="pt-6">
           <p className="text-sm text-blue-800 dark:text-blue-200">
-            To update your personal information, please contact support or visit your nearest branch.
+            {t('updateInfo')}
           </p>
         </CardContent>
       </Card>
     </div>
   )
-} 
+}

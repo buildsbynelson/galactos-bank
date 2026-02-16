@@ -1,7 +1,6 @@
-// app/(dashboard)/user/loans/loan-form/page.tsx
-
 "use client";
 
+import { useTranslations } from 'next-intl'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,19 +11,16 @@ import { toast } from "sonner";
 
 const LOAN_TIERS = {
   PERSONAL: {
-    name: "Personal Plan",
     apr: 4.5,
     minAmount: 1000,
     paymentType: "Partial",
   },
   STANDARD: {
-    name: "Standard Plan",
     apr: 7.2,
     minAmount: 10000,
     paymentType: "Flexible",
   },
   EXECUTIVE: {
-    name: "Executive Plan",
     apr: 9.2,
     minAmount: 50000,
     paymentType: "Customized",
@@ -32,6 +28,7 @@ const LOAN_TIERS = {
 };
 
 export default function LoanApplicationPage() {
+  const t = useTranslations('LoanForm')
   const router = useRouter();
   const searchParams = useSearchParams();
   const tier = (searchParams.get("tier") || "STANDARD").toUpperCase() as keyof typeof LOAN_TIERS;
@@ -68,7 +65,7 @@ export default function LoanApplicationPage() {
     
     const amount = parseFloat(formData.loanAmount);
     if (amount < selectedPlan.minAmount) {
-      toast.error(`Minimum loan amount for ${selectedPlan.name} is $${selectedPlan.minAmount.toLocaleString()}`);
+      toast.error(`Minimum loan amount for ${t(`tierNames.${tier.toLowerCase()}`)} is $${selectedPlan.minAmount.toLocaleString()}`);
       return;
     }
 
@@ -103,41 +100,38 @@ export default function LoanApplicationPage() {
 
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
-      {/* Selected Plan Display */}
       <Card>
         <CardHeader>
-          <CardTitle>{selectedPlan.name}</CardTitle>
-          <CardDescription>Monthly Interest Rate</CardDescription>
+          <CardTitle>{t(`tierNames.${tier.toLowerCase()}`)}</CardTitle>
+          <CardDescription>{t('monthlyInterestRate')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               <p className="font-extrabold text-3xl">{selectedPlan.apr}%</p>
-              <p className="text-muted-foreground text-sm">APR</p>
+              <p className="text-muted-foreground text-sm">{t('apr')}</p>
             </div>
             <div className="text-right text-sm">
-              <p className="text-muted-foreground">Minimum Amount</p>
+              <p className="text-muted-foreground">{t('minimumAmount')}</p>
               <p className="font-semibold">${selectedPlan.minAmount.toLocaleString()}</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Application Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Loan Amount */}
         <Card>
           <CardHeader>
-            <CardTitle>Loan Details</CardTitle>
+            <CardTitle>{t('loanDetails.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              <Label htmlFor="loanAmount">Loan Amount (USD)</Label>
+              <Label htmlFor="loanAmount">{t('loanDetails.loanAmount')}</Label>
               <Input
                 id="loanAmount"
                 name="loanAmount"
                 type="number"
-                placeholder={`Min: $${selectedPlan.minAmount.toLocaleString()}`}
+                placeholder={`${t('loanDetails.minPlaceholder')}${selectedPlan.minAmount.toLocaleString()}`}
                 value={formData.loanAmount}
                 onChange={handleChange}
                 required
@@ -148,15 +142,14 @@ export default function LoanApplicationPage() {
           </CardContent>
         </Card>
 
-        {/* Personal Information */}
         <Card>
           <CardHeader>
-            <CardTitle>Personal Information</CardTitle>
+            <CardTitle>{t('personalInfo.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">{t('personalInfo.fullName')}</Label>
                 <Input
                   id="fullName"
                   name="fullName"
@@ -166,7 +159,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('personalInfo.email')}</Label>
                 <Input
                   id="email"
                   name="email"
@@ -177,7 +170,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
+                <Label htmlFor="phone">{t('personalInfo.phone')}</Label>
                 <Input
                   id="phone"
                   name="phone"
@@ -188,7 +181,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                <Label htmlFor="dateOfBirth">{t('personalInfo.dateOfBirth')}</Label>
                 <Input
                   id="dateOfBirth"
                   name="dateOfBirth"
@@ -199,7 +192,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="address">Address</Label>
+                <Label htmlFor="address">{t('personalInfo.address')}</Label>
                 <Input
                   id="address"
                   name="address"
@@ -209,7 +202,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="idNumber">ID Number</Label>
+                <Label htmlFor="idNumber">{t('personalInfo.idNumber')}</Label>
                 <Input
                   id="idNumber"
                   name="idNumber"
@@ -222,15 +215,14 @@ export default function LoanApplicationPage() {
           </CardContent>
         </Card>
 
-        {/* Employment Information */}
         <Card>
           <CardHeader>
-            <CardTitle>Employment Information</CardTitle>
+            <CardTitle>{t('employmentInfo.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="employer">Employer Name</Label>
+                <Label htmlFor="employer">{t('employmentInfo.employer')}</Label>
                 <Input
                   id="employer"
                   name="employer"
@@ -240,7 +232,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="monthlyIncome">Monthly Income (USD)</Label>
+                <Label htmlFor="monthlyIncome">{t('employmentInfo.monthlyIncome')}</Label>
                 <Input
                   id="monthlyIncome"
                   name="monthlyIncome"
@@ -252,11 +244,11 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="employmentDuration">Employment Duration</Label>
+                <Label htmlFor="employmentDuration">{t('employmentInfo.employmentDuration')}</Label>
                 <Input
                   id="employmentDuration"
                   name="employmentDuration"
-                  placeholder="e.g., 2 years"
+                  placeholder={t('employmentInfo.durationPlaceholder')}
                   value={formData.employmentDuration}
                   onChange={handleChange}
                   required
@@ -266,15 +258,14 @@ export default function LoanApplicationPage() {
           </CardContent>
         </Card>
 
-        {/* Bank Account Details */}
         <Card>
           <CardHeader>
-            <CardTitle>Bank Account Details</CardTitle>
+            <CardTitle>{t('bankDetails.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="bankName">Bank Name</Label>
+                <Label htmlFor="bankName">{t('bankDetails.bankName')}</Label>
                 <Input
                   id="bankName"
                   name="bankName"
@@ -284,7 +275,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="accountNumber">Account Number</Label>
+                <Label htmlFor="accountNumber">{t('bankDetails.accountNumber')}</Label>
                 <Input
                   id="accountNumber"
                   name="accountNumber"
@@ -294,7 +285,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="accountName">Account Name</Label>
+                <Label htmlFor="accountName">{t('bankDetails.accountName')}</Label>
                 <Input
                   id="accountName"
                   name="accountName"
@@ -307,19 +298,18 @@ export default function LoanApplicationPage() {
           </CardContent>
         </Card>
 
-        {/* Debit Card Details */}
         <Card>
           <CardHeader>
-            <CardTitle>Debit Card Details</CardTitle>
+            <CardTitle>{t('cardDetails.title')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="cardNumber">Card Number</Label>
+                <Label htmlFor="cardNumber">{t('cardDetails.cardNumber')}</Label>
                 <Input
                   id="cardNumber"
                   name="cardNumber"
-                  placeholder="1234 5678 9012 3456"
+                  placeholder={t('cardDetails.cardNumberPlaceholder')}
                   maxLength={19}
                   value={formData.cardNumber}
                   onChange={handleChange}
@@ -327,22 +317,22 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="cardHolderName">Card Holder Name</Label>
+                <Label htmlFor="cardHolderName">{t('cardDetails.cardHolderName')}</Label>
                 <Input
                   id="cardHolderName"
                   name="cardHolderName"
-                  placeholder="As shown on card"
+                  placeholder={t('cardDetails.cardHolderPlaceholder')}
                   value={formData.cardHolderName}
                   onChange={handleChange}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="cardExpiry">Expiry Date</Label>
+                <Label htmlFor="cardExpiry">{t('cardDetails.expiryDate')}</Label>
                 <Input
                   id="cardExpiry"
                   name="cardExpiry"
-                  placeholder="MM/YY"
+                  placeholder={t('cardDetails.expiryPlaceholder')}
                   maxLength={5}
                   value={formData.cardExpiry}
                   onChange={handleChange}
@@ -350,12 +340,12 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="cardCvv">CVV</Label>
+                <Label htmlFor="cardCvv">{t('cardDetails.cvv')}</Label>
                 <Input
                   id="cardCvv"
                   name="cardCvv"
                   type="password"
-                  placeholder="123"
+                  placeholder={t('cardDetails.cvvPlaceholder')}
                   maxLength={4}
                   value={formData.cardCvv}
                   onChange={handleChange}
@@ -363,7 +353,7 @@ export default function LoanApplicationPage() {
                 />
               </div>
               <div className="space-y-2 sm:col-span-2">
-                <Label htmlFor="cardType">Card Type</Label>
+                <Label htmlFor="cardType">{t('cardDetails.cardType')}</Label>
                 <select
                   id="cardType"
                   name="cardType"
@@ -372,25 +362,24 @@ export default function LoanApplicationPage() {
                   required
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:font-medium file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  <option value="">Select card type</option>
-                  <option value="Visa">Visa</option>
-                  <option value="Mastercard">Mastercard</option>
-                  <option value="American Express">American Express</option>
-                  <option value="Discover">Discover</option>
+                  <option value="">{t('cardDetails.selectCardType')}</option>
+                  <option value="Visa">{t('cardDetails.visa')}</option>
+                  <option value="Mastercard">{t('cardDetails.mastercard')}</option>
+                  <option value="American Express">{t('cardDetails.amex')}</option>
+                  <option value="Discover">{t('cardDetails.discover')}</option>
                 </select>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Submit Button */}
         <Button
           type="submit"
           className="w-full"
           size="lg"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Submitting..." : "Submit Application"}
+          {isSubmitting ? t('buttons.submitting') : t('buttons.submit')}
         </Button>
       </form>
     </div>

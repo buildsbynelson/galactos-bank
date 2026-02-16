@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/session"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
+import { getTranslations } from 'next-intl/server'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { CheckCircle2, XCircle, Clock } from "lucide-react"
@@ -18,7 +19,6 @@ export default async function TransactionReceiptPage({
     redirect("/login")
   }
 
-  // Fetch transaction details from database
   const transaction = await prisma.transaction.findUnique({
     where: { id },
     include: {
@@ -35,22 +35,20 @@ export default async function TransactionReceiptPage({
     redirect("/user/transactions")
   }
 
-  // Check if user is authorized to view this transaction
   if (transaction.senderId !== session.user.id && transaction.receiverId !== session.user.id) {
     redirect("/user/transactions")
   }
+
+  const t = await getTranslations('TransactionReceipt')
 
   const isReceiver = transaction.receiverId === session.user.id
   const amount = parseFloat(transaction.amount.toString())
   const balanceBefore = parseFloat(transaction.balanceBefore.toString())
   const balanceAfter = parseFloat(transaction.balanceAfter.toString())
   
-  // ✅ EXTRACT BANK NAME from description
-  // Description format: "Transfer to [Name] via [BankName]"
   const extractBankName = (description: string | null): string => {
     if (!description) return "Not Specified"
     
-    // Try to extract bank name from "via [BankName]" pattern
     const viaMatch = description.match(/via\s+(.+)$/i)
     if (viaMatch && viaMatch[1]) {
       return viaMatch[1].trim()
@@ -109,7 +107,7 @@ export default async function TransactionReceiptPage({
       name: transaction.receiver?.name || transaction.receiverName || "Unknown",
       accountNumber: transaction.receiver?.accountNumber || transaction.receiverAccount || "N/A",
       email: transaction.receiver?.email,
-      bankName: bankName // ✅ NOW INCLUDED
+      bankName: bankName
     },
     amount,
     balanceBefore,
@@ -123,20 +121,20 @@ export default async function TransactionReceiptPage({
       <ReceiptActions receiptData={receiptData} />
 
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Transaction Receipt</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground">
-          Receipt for transaction {receiptData.transactionId}
+          {t('receiptFor')} {receiptData.transactionId}
         </p>
       </div>
 
       <Card className="border-2">
         <CardHeader className="bg-muted/50">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl">Transaction Details</CardTitle>
+            <CardTitle className="text-2xl">{t('transactionDetails')}</CardTitle>
             <div className={`flex items-center gap-2 rounded-full px-3 py-1 ${getStatusColor()}`}>
               {getStatusIcon()}
               <span className="text-sm font-medium">
-                {receiptData.status}
+                {t(`status.${receiptData.status.toLowerCase()}`)}
               </span>
             </div>
           </div>
@@ -144,19 +142,19 @@ export default async function TransactionReceiptPage({
         <CardContent className="space-y-6 pt-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Transaction ID</p>
+              <p className="text-sm text-muted-foreground">{t('transactionId')}</p>
               <p className="font-mono text-sm font-medium">{receiptData.transactionId}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Transaction Type</p>
+              <p className="text-sm text-muted-foreground">{t('transactionType')}</p>
               <p className="font-medium">{receiptData.type}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Date</p>
+              <p className="text-sm text-muted-foreground">{t('date')}</p>
               <p className="font-medium">{receiptData.date}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Time</p>
+              <p className="text-sm text-muted-foreground">{t('time')}</p>
               <p className="font-medium">{receiptData.time}</p>
             </div>
           </div>
@@ -165,7 +163,7 @@ export default async function TransactionReceiptPage({
             <>
               <Separator />
               <div>
-                <p className="text-sm text-muted-foreground mb-1">Description</p>
+                <p className="text-sm text-muted-foreground mb-1">{t('description')}</p>
                 <p className="text-sm">{receiptData.description}</p>
               </div>
             </>
@@ -176,45 +174,44 @@ export default async function TransactionReceiptPage({
               <Separator />
               
               <div>
-                <h3 className="mb-3 text-lg font-semibold">From</h3>
+                <h3 className="mb-3 text-lg font-semibold">{t('from')}</h3>
                 <div className="space-y-2 rounded-lg bg-muted/50 p-4">
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Account Name</span>
+                    <span className="text-sm text-muted-foreground">{t('accountName')}</span>
                     <span className="font-medium">{receiptData.sender.name}</span>
                   </div>
                   {receiptData.sender.email && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Email</span>
+                      <span className="text-sm text-muted-foreground">{t('email')}</span>
                       <span className="text-sm">{receiptData.sender.email}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Account Number</span>
+                    <span className="text-sm text-muted-foreground">{t('accountNumber')}</span>
                     <span className="font-mono text-sm font-medium">{receiptData.sender.accountNumber}</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="mb-3 text-lg font-semibold">To</h3>
+                <h3 className="mb-3 text-lg font-semibold">{t('to')}</h3>
                 <div className="space-y-2 rounded-lg bg-muted/50 p-4">
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Account Name</span>
+                    <span className="text-sm text-muted-foreground">{t('accountName')}</span>
                     <span className="font-medium">{receiptData.recipient.name}</span>
                   </div>
-                  {/* ✅ NOW SHOWING BANK NAME */}
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Bank</span>
+                    <span className="text-sm text-muted-foreground">{t('bank')}</span>
                     <span className="font-medium">{receiptData.recipient.bankName}</span>
                   </div>
                   {receiptData.recipient.email && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Email</span>
+                      <span className="text-sm text-muted-foreground">{t('email')}</span>
                       <span className="text-sm">{receiptData.recipient.email}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Account Number</span>
+                    <span className="text-sm text-muted-foreground">{t('accountNumber')}</span>
                     <span className="font-mono text-sm font-medium">{receiptData.recipient.accountNumber}</span>
                   </div>
                 </div>
@@ -225,27 +222,27 @@ export default async function TransactionReceiptPage({
           <Separator />
 
           <div>
-            <h3 className="mb-3 text-lg font-semibold">Payment Details</h3>
+            <h3 className="mb-3 text-lg font-semibold">{t('paymentDetails')}</h3>
             <div className="space-y-2 rounded-lg bg-muted/50 p-4">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  {receiptData.isReceiver ? "Received Amount" : "Transfer Amount"}
+                  {receiptData.isReceiver ? t('receivedAmount') : t('transferAmount')}
                 </span>
                 <span className={`font-medium ${receiptData.isReceiver ? 'text-green-600' : ''}`}>
                   {receiptData.isReceiver ? '+' : '-'}${receiptData.amount.toFixed(2)}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Transaction Fee</span>
+                <span className="text-muted-foreground">{t('transactionFee')}</span>
                 <span className="font-medium">$0.00</span>
               </div>
               <Separator />
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Balance Before</span>
+                <span className="text-muted-foreground">{t('balanceBefore')}</span>
                 <span className="font-medium">${receiptData.balanceBefore.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg">
-                <span className="font-semibold">Balance After</span>
+                <span className="font-semibold">{t('balanceAfter')}</span>
                 <span className="font-bold text-primary">${receiptData.balanceAfter.toFixed(2)}</span>
               </div>
             </div>
@@ -256,8 +253,7 @@ export default async function TransactionReceiptPage({
       <Card className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
         <CardContent className="pt-6">
           <p className="text-center text-sm text-blue-800 dark:text-blue-200">
-            This is an official receipt for your transaction. Keep it for your records. 
-            If you have any questions, please contact our support team.
+            {t('officialReceipt')}
           </p>
         </CardContent>
       </Card>

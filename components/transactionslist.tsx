@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -34,6 +35,7 @@ interface TransactionsListProps {
 }
 
 export default function TransactionsList({ transactions }: TransactionsListProps) {
+  const t = useTranslations('TransactionsList')
   const [searchQuery, setSearchQuery] = useState("")
   const [filterType, setFilterType] = useState("all")
 
@@ -73,10 +75,10 @@ export default function TransactionsList({ transactions }: TransactionsListProps
   }
 
   const getTransactionLabel = (txn: Transaction) => {
-    if (txn.type === "deposit") return "Deposit"
-    if (txn.type === "withdrawal") return "Withdrawal"
+    if (txn.type === "deposit") return t('type.deposit')
+    if (txn.type === "withdrawal") return t('type.withdrawal')
     if (txn.type === "transfer") {
-      return txn.isReceiver ? "Received" : "Transfer"
+      return txn.isReceiver ? t('type.received') : t('type.transfer')
     }
     return txn.type
   }
@@ -84,9 +86,9 @@ export default function TransactionsList({ transactions }: TransactionsListProps
   return (
     <div className="container mx-auto max-w-5xl space-y-6 p-4 lg:p-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Transactions</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground">
-          View and manage your transaction history
+          {t('description')}
         </p>
       </div>
 
@@ -94,7 +96,7 @@ export default function TransactionsList({ transactions }: TransactionsListProps
         <div className="relative flex-1 md:max-w-sm">
           <IconSearch className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search transactions..."
+            placeholder={t('searchPlaceholder')}
             className="pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -104,13 +106,13 @@ export default function TransactionsList({ transactions }: TransactionsListProps
           <Select value={filterType} onValueChange={setFilterType}>
             <SelectTrigger className="w-[180px]">
               <IconFilter className="mr-2 h-4 w-4" />
-              <SelectValue placeholder="Filter by type" />
+              <SelectValue placeholder={t('filterByType')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="deposit">Deposits</SelectItem>
-              <SelectItem value="transfer">Transfers</SelectItem>
-              <SelectItem value="withdrawal">Withdrawals</SelectItem>
+              <SelectItem value="all">{t('allTypes')}</SelectItem>
+              <SelectItem value="deposit">{t('deposits')}</SelectItem>
+              <SelectItem value="transfer">{t('transfers')}</SelectItem>
+              <SelectItem value="withdrawal">{t('withdrawals')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -118,17 +120,17 @@ export default function TransactionsList({ transactions }: TransactionsListProps
 
       <Card>
         <CardHeader>
-          <CardTitle>Transaction History</CardTitle>
+          <CardTitle>{t('cardTitle')}</CardTitle>
           <CardDescription>
-            {filteredTransactions.length} transaction{filteredTransactions.length !== 1 ? 's' : ''} found
+            {filteredTransactions.length} {filteredTransactions.length !== 1 ? t('transactionsFoundPlural') : t('transactionsFound')} {t('found')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {filteredTransactions.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <p className="text-muted-foreground">No transactions found</p>
+              <p className="text-muted-foreground">{t('noTransactions')}</p>
               <Button asChild className="mt-4">
-                <Link href="/user/transfer">Make a Transfer</Link>
+                <Link href="/user/transfer">{t('makeTransfer')}</Link>
               </Button>
             </div>
           ) : (
@@ -154,12 +156,12 @@ export default function TransactionsList({ transactions }: TransactionsListProps
                       <div className="flex items-center gap-2">
                         <p className="font-medium">{getTransactionLabel(transaction)}</p>
                         <Badge variant="outline" className={getStatusColor(transaction.status)}>
-                          {transaction.status}
+                          {t(`status.${transaction.status}`)}
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {transaction.recipient && `To ${transaction.recipient}`}
-                        {transaction.sender && `From ${transaction.sender}`}
+                        {transaction.recipient && `${t('to')} ${transaction.recipient}`}
+                        {transaction.sender && `${t('from')} ${transaction.sender}`}
                         {transaction.description && (
                           <>
                             {(transaction.recipient || transaction.sender) && " • "}

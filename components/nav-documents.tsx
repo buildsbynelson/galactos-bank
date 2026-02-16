@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from 'next-intl'
 import {
   IconDots,
   IconFolder,
@@ -34,11 +35,12 @@ export function NavDocuments({
     icon: Icon
   }[]
 }) {
+  const t = useTranslations('Sidebar')
   const { isMobile } = useSidebar()
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Transactions</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('transactionsLabel')}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
@@ -65,16 +67,16 @@ export function NavDocuments({
               >
                 <DropdownMenuItem>
                   <IconFolder />
-                  <span>Open</span>
+                  <span>{t('actions.open')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <IconShare3 />
-                  <span>Share</span>
+                  <span>{t('actions.share')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem variant="destructive">
                   <IconTrash />
-                  <span>Delete</span>
+                  <span>{t('actions.delete')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -83,7 +85,7 @@ export function NavDocuments({
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <IconDots className="text-sidebar-foreground/70" />
-            <span>More</span>
+            <span>{t('more')}</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

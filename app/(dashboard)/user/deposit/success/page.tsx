@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from 'next-intl'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Clock, Home, X } from "lucide-react"
@@ -17,6 +18,7 @@ interface DepositResult {
 }
 
 export default function DepositSuccessPage() {
+  const t = useTranslations('DepositSuccess')
   const router = useRouter()
   const [depositResult, setDepositResult] = useState<DepositResult | null>(null)
   const [loading, setLoading] = useState(true)
@@ -59,7 +61,7 @@ export default function DepositSuccessPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
+        <p>{t('loading')}</p>
       </div>
     )
   }
@@ -69,7 +71,7 @@ export default function DepositSuccessPage() {
       <div className="flex flex-col items-center justify-center min-h-screen space-y-4">
         <p className="text-red-500">{error}</p>
         <Button onClick={() => router.push('/user/deposit')}>
-          Back to Deposit
+          {t('backToDeposit')}
         </Button>
       </div>
     )
@@ -84,7 +86,7 @@ export default function DepositSuccessPage() {
       <div className="flex justify-end">
         <Button variant="ghost" size="sm" onClick={handleDone}>
           <X className="mr-1 h-4 w-4" />
-          Done
+          {t('done')}
         </Button>
       </div>
 
@@ -98,10 +100,10 @@ export default function DepositSuccessPage() {
 
         <div className="text-center">
           <h1 className="text-3xl font-bold tracking-tight text-yellow-600 dark:text-yellow-400">
-            Deposit Pending Approval
+            {t('title')}
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Your deposit request has been submitted and is awaiting admin approval
+            {t('description')}
           </p>
         </div>
 
@@ -109,23 +111,23 @@ export default function DepositSuccessPage() {
           <CardContent className="pt-6">
             <div className="space-y-3 text-center">
               <div>
-                <p className="text-sm text-muted-foreground">Deposit Amount</p>
+                <p className="text-sm text-muted-foreground">{t('depositAmount')}</p>
                 <p className="text-3xl font-bold">
                   ${parseFloat(depositResult.transaction.amount).toFixed(2)}
                 </p>
               </div>
               <div className="border-t pt-3">
-                <p className="text-sm text-muted-foreground">Payment Method</p>
+                <p className="text-sm text-muted-foreground">{t('paymentMethod')}</p>
                 <p className="font-medium">{depositResult.transaction.method}</p>
               </div>
               <div className="border-t pt-3">
-                <p className="text-sm text-muted-foreground">Transaction Reference</p>
+                <p className="text-sm text-muted-foreground">{t('transactionReference')}</p>
                 <p className="font-mono text-sm font-medium">
                   {depositResult.transaction.reference}
                 </p>
               </div>
               <div className="border-t pt-3">
-                <p className="text-sm text-muted-foreground">Status</p>
+                <p className="text-sm text-muted-foreground">{t('status')}</p>
                 <span className="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">
                   {depositResult.transaction.status}
                 </span>
@@ -137,20 +139,20 @@ export default function DepositSuccessPage() {
         <div className="flex w-full flex-col gap-3">
           <Button onClick={handleDone} className="w-full" size="lg">
             <Home className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            {t('backToDashboard')}
           </Button>
         </div>
       </div>
 
       <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-950">
         <p className="text-center text-sm text-yellow-800 dark:text-yellow-200">
-          Request submitted at {new Date(depositResult.transaction.date).toLocaleString()}. You will be notified once it&apos;s reviewed.
+          {t('submittedAt')} {new Date(depositResult.transaction.date).toLocaleString()}. {t('notifiedText')}
         </p>
       </div>
 
       <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
         <p className="text-center text-sm text-blue-800 dark:text-blue-200">
-          <strong>Note:</strong> Deposits typically take 1-3 business days to be reviewed and processed.
+          <strong>{t('note')}</strong> {t('processingTime')}
         </p>
       </div>
     </div>

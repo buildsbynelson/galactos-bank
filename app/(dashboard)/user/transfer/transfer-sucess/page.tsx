@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useTranslations } from 'next-intl'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Download, Share2, CheckCircle2, ArrowLeft, Home } from "lucide-react"
+import { Download, Share2, Clock, ArrowLeft, Home } from "lucide-react"
 
 interface TransferResult {
   transaction: {
@@ -22,6 +23,7 @@ interface TransferResult {
 }
 
 export default function TransactionReceiptPage() {
+  const t = useTranslations('TransferSuccess')
   const router = useRouter()
   const [transferResult, setTransferResult] = useState<TransferResult | null>(null)
   const [loading, setLoading] = useState(true)
@@ -33,9 +35,6 @@ export default function TransactionReceiptPage() {
       return
     }
     const parsedResult = JSON.parse(result)
-    console.log("Transfer Result from sessionStorage:", parsedResult)
-    console.log("Receiver Name:", parsedResult.transaction?.receiver)
-    console.log("Bank Name:", parsedResult.transaction?.bankName)
     setTransferResult(parsedResult)
     setLoading(false)
   }, [router])
@@ -43,13 +42,13 @@ export default function TransactionReceiptPage() {
   const handleDownload = () => {
     if (!transferResult) return
     
-    // Create receipt text
     const receiptText = `
 TRANSACTION RECEIPT
 ===================
 Transaction ID: ${transferResult.transaction.reference}
 Date: ${new Date(transferResult.transaction.date).toLocaleString()}
 Type: Transfer
+Status: PENDING
 
 SENDER INFORMATION
 Account: ${transferResult.transaction.senderAccount || 'Your Account'}
@@ -64,10 +63,9 @@ Amount: $${parseFloat(transferResult.transaction.amount).toFixed(2)}
 Previous Balance: $${parseFloat(transferResult.transaction.balanceBefore).toFixed(2)}
 New Balance: $${parseFloat(transferResult.transaction.balanceAfter).toFixed(2)}
 
-Status: COMPLETED
+Status: PENDING APPROVAL
     `.trim()
 
-    // Create and download file
     const blob = new Blob([receiptText], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -85,10 +83,10 @@ Status: COMPLETED
     if (navigator.share) {
       navigator.share({
         title: 'Transaction Receipt',
-        text: `Transfer of $${parseFloat(transferResult.transaction.amount).toFixed(2)} to ${transferResult.transaction.receiver} at ${transferResult.transaction.bankName || 'Bank'}. Reference: ${transferResult.transaction.reference}`,
+        text: `Transfer of $${parseFloat(transferResult.transaction.amount).toFixed(2)} to ${transferResult.transaction.receiver} at ${transferResult.transaction.bankName || 'Bank'}. Reference: ${transferResult.transaction.reference}. Status: PENDING`,
       }).catch((err) => console.log('Share failed:', err))
     } else {
-      const text = `Transfer Receipt\nAmount: $${parseFloat(transferResult.transaction.amount).toFixed(2)}\nTo: ${transferResult.transaction.receiver}\nBank: ${transferResult.transaction.bankName || 'Not Specified'}\nReference: ${transferResult.transaction.reference}`
+      const text = `Transfer Receipt\nAmount: $${parseFloat(transferResult.transaction.amount).toFixed(2)}\nTo: ${transferResult.transaction.receiver}\nBank: ${transferResult.transaction.bankName || 'Not Specified'}\nReference: ${transferResult.transaction.reference}\nStatus: PENDING`
       navigator.clipboard.writeText(text)
       alert('Receipt details copied to clipboard!')
     }
@@ -96,14 +94,14 @@ Status: COMPLETED
 
   const handleBackToDashboard = () => {
     sessionStorage.removeItem("transferResult")
-    sessionStorage.removeItem("transferData") // Clean up transfer data too
+    sessionStorage.removeItem("transferData")
     router.push("/user")
   }
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
+        <p>{t('loading')}</p>
       </div>
     )
   }
@@ -114,7 +112,6 @@ Status: COMPLETED
 
   const receiptData = {
     transactionId: transferResult.transaction.reference,
-    status: "Completed",
     date: new Date(transferResult.transaction.date).toLocaleDateString(),
     time: new Date(transferResult.transaction.date).toLocaleTimeString(),
     recipient: {
@@ -132,7 +129,7 @@ Status: COMPLETED
       <div className="flex items-center justify-between">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {t('buttons.back')}
         </Button>
         <div className="flex gap-2">
           <Button variant="outline" size="icon" onClick={handleShare}>
@@ -145,40 +142,36 @@ Status: COMPLETED
       </div>
 
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">Transaction Receipt</h1>
-        <p className="text-muted-foreground">
-          Receipt for transaction {receiptData.transactionId}
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight">{t('titlePending')}</h1>
+        <p className="text-muted-foreground">{t('descriptionPending')}</p>
       </div>
 
       <Card className="border-2">
         <CardHeader className="bg-muted/50">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl">Transaction Details</CardTitle>
-            <div className="flex items-center gap-2 rounded-full bg-green-100 px-3 py-1 dark:bg-green-900">
-              <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
-              <span className="text-sm font-medium text-green-600 dark:text-green-400">
-                {receiptData.status}
-              </span>
+            <CardTitle className="text-2xl">{t('transactionDetails')}</CardTitle>
+            <div className="flex items-center gap-2 rounded-full px-3 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-400">
+              <Clock className="h-4 w-4" />
+              <span className="text-sm font-medium">{t('status.pending')}</span>
             </div>
           </div>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Transaction ID</p>
+              <p className="text-sm text-muted-foreground">{t('transactionId')}</p>
               <p className="font-mono text-sm font-medium">{receiptData.transactionId}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Transaction Type</p>
-              <p className="font-medium">Transfer</p>
+              <p className="text-sm text-muted-foreground">{t('transactionType')}</p>
+              <p className="font-medium">{t('transfer')}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Date</p>
+              <p className="text-sm text-muted-foreground">{t('date')}</p>
               <p className="font-medium">{receiptData.date}</p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Time</p>
+              <p className="text-sm text-muted-foreground">{t('time')}</p>
               <p className="font-medium">{receiptData.time}</p>
             </div>
           </div>
@@ -186,18 +179,18 @@ Status: COMPLETED
           <Separator />
 
           <div>
-            <h3 className="mb-3 text-lg font-semibold">Recipient Information</h3>
+            <h3 className="mb-3 text-lg font-semibold">{t('recipientInfo')}</h3>
             <div className="space-y-2 rounded-lg bg-muted/50 p-4">
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Account Name</span>
+                <span className="text-sm text-muted-foreground">{t('accountName')}</span>
                 <span className="font-medium">{receiptData.recipient.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Bank</span>
+                <span className="text-sm text-muted-foreground">{t('bank')}</span>
                 <span className="font-medium">{receiptData.recipient.bankName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">Account Number</span>
+                <span className="text-sm text-muted-foreground">{t('accountNumber')}</span>
                 <span className="font-mono text-sm font-medium">{receiptData.recipient.accountNumber}</span>
               </div>
             </div>
@@ -206,23 +199,23 @@ Status: COMPLETED
           <Separator />
 
           <div>
-            <h3 className="mb-3 text-lg font-semibold">Payment Details</h3>
+            <h3 className="mb-3 text-lg font-semibold">{t('paymentDetails')}</h3>
             <div className="space-y-2 rounded-lg bg-muted/50 p-4">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Transfer Amount</span>
+                <span className="text-muted-foreground">{t('transferAmount')}</span>
                 <span className="font-medium">${receiptData.amount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Transaction Fee</span>
+                <span className="text-muted-foreground">{t('transactionFee')}</span>
                 <span className="font-medium">$0.00</span>
               </div>
               <Separator />
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Balance Before</span>
+                <span className="text-muted-foreground">{t('balanceBefore')}</span>
                 <span className="font-medium">${receiptData.balanceBefore.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-lg">
-                <span className="font-semibold">Balance After</span>
+                <span className="font-semibold">{t('balanceAfter')}</span>
                 <span className="font-bold text-primary">${receiptData.balanceAfter.toFixed(2)}</span>
               </div>
             </div>
@@ -230,7 +223,7 @@ Status: COMPLETED
 
           <Button onClick={handleBackToDashboard} className="w-full" size="lg">
             <Home className="mr-2 h-4 w-4" />
-            Back to Dashboard
+            {t('buttons.backToDashboard')}
           </Button>
         </CardContent>
       </Card>
@@ -238,8 +231,7 @@ Status: COMPLETED
       <Card className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
         <CardContent className="pt-6">
           <p className="text-center text-sm text-blue-800 dark:text-blue-200">
-            This is an official receipt for your transaction. Keep it for your records. 
-            If you have any questions, please contact our support team.
+            {t('officialReceipt')}
           </p>
         </CardContent>
       </Card>

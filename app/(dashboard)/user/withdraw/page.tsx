@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -10,6 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Wallet, ArrowDownToLine, Check } from "lucide-react"
 
 export default function WithdrawPage() {
+  const t = useTranslations('WithdrawPage')
   const [isWithdrawing, setIsWithdrawing] = useState(false)
   const [withdrawSuccess, setWithdrawSuccess] = useState(false)
   const [, setError] = useState("")
@@ -22,27 +24,26 @@ export default function WithdrawPage() {
     notes: ""
   })
 
-     // Fetch user balance on component mount
-     useEffect(() => {
-       const fetchBalance = async () => {
-         try {
-           const response = await fetch('/api/user/balance')
-           const data = await response.json()
-           
-           if (response.ok) {
-             setCurrentBalance(data.balance)
-           } else {
-             setError("Failed to load balance")
-           }
-         } catch {
-           setError("Error loading balance")
-         } finally {
-           setBalanceLoading(false)
-         }
-       }
-   
-       fetchBalance()
-     }, [])
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const response = await fetch('/api/user/balance')
+        const data = await response.json()
+        
+        if (response.ok) {
+          setCurrentBalance(data.balance)
+        } else {
+          setError("Failed to load balance")
+        }
+      } catch {
+        setError("Error loading balance")
+      } finally {
+        setBalanceLoading(false)
+      }
+    }
+
+    fetchBalance()
+  }, [])
 
   const handleWithdraw = () => {
     setIsWithdrawing(true)
@@ -72,9 +73,9 @@ export default function WithdrawPage() {
   return (
     <div className="container mx-auto max-w-2xl space-y-6 p-4 lg:p-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Withdraw Funds</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground">
-          Transfer money from your account
+          {t('description')}
         </p>
       </div>
 
@@ -82,7 +83,7 @@ export default function WithdrawPage() {
         <Alert className="border-green-600 bg-green-50 dark:bg-green-950">
           <Check className="h-4 w-4 text-green-600" />
           <AlertDescription className="text-green-600">
-            Withdrawal processed successfully!
+            {t('successMessage')}
           </AlertDescription>
         </Alert>
       )}
@@ -91,18 +92,18 @@ export default function WithdrawPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Wallet className="h-5 w-5" />
-            Available Balance
+            {t('availableBalance')}
           </CardTitle>
           <CardDescription className="text-2xl font-bold text-foreground">
             {balanceLoading ? (
-              <span className="text-muted-foreground">Loading...</span>
+              <span className="text-muted-foreground">{t('loading')}</span>
             ) : currentBalance !== null ? (
               `$${currentBalance.toLocaleString('en-US', { 
                 minimumFractionDigits: 2, 
                 maximumFractionDigits: 2 
               })}`
             ) : (
-              <span className="text-destructive">Error loading balance</span>
+              <span className="text-destructive">{t('errorLoadingBalance')}</span>
             )}
           </CardDescription>
         </CardHeader>
@@ -110,15 +111,15 @@ export default function WithdrawPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Withdrawal Details</CardTitle>
+          <CardTitle>{t('withdrawalDetails.title')}</CardTitle>
           <CardDescription>
-            Enter the amount and destination for your withdrawal
+            {t('withdrawalDetails.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="amount">Amount</Label>
+              <Label htmlFor="amount">{t('withdrawalDetails.amount')}</Label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                   $
@@ -127,32 +128,32 @@ export default function WithdrawPage() {
                   id="amount"
                   type="number"
                   step="0.01"
-                  placeholder="0.00"
+                  placeholder={t('withdrawalDetails.amountPlaceholder')}
                   className="pl-7"
                   value={formData.amount}
                   onChange={(e) => handleChange("amount", e.target.value)}
                 />
               </div>
               <p className="text-xs text-muted-foreground">
-  Maximum withdrawal: ${currentBalance !== null ? currentBalance.toFixed(2) : '0.00'}
-</p>
+                {t('withdrawalDetails.maximumWithdrawal')} ${currentBalance !== null ? currentBalance.toFixed(2) : '0.00'}
+              </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="accountNumber">Destination Account Number</Label>
+              <Label htmlFor="accountNumber">{t('withdrawalDetails.destinationAccount')}</Label>
               <Input
                 id="accountNumber"
-                placeholder="Enter account number"
+                placeholder={t('withdrawalDetails.destinationPlaceholder')}
                 value={formData.accountNumber}
                 onChange={(e) => handleChange("accountNumber", e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="notes">Notes (Optional)</Label>
+              <Label htmlFor="notes">{t('withdrawalDetails.notes')}</Label>
               <Textarea
                 id="notes"
-                placeholder="Add any additional notes"
+                placeholder={t('withdrawalDetails.notesPlaceholder')}
                 value={formData.notes}
                 onChange={(e) => handleChange("notes", e.target.value)}
               />
@@ -160,11 +161,11 @@ export default function WithdrawPage() {
 
             <div className="rounded-lg bg-muted p-4">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Withdrawal Fee</span>
+                <span className="text-muted-foreground">{t('summary.withdrawalFee')}</span>
                 <span className="font-medium">$0.00</span>
               </div>
               <div className="mt-2 flex justify-between border-t pt-2">
-                <span className="font-semibold">Total Amount</span>
+                <span className="font-semibold">{t('summary.totalAmount')}</span>
                 <span className="text-lg font-bold">
                   ${formData.amount ? parseFloat(formData.amount).toFixed(2) : "0.00"}
                 </span>
@@ -177,11 +178,11 @@ export default function WithdrawPage() {
               disabled={isWithdrawing}
             >
               {isWithdrawing ? (
-                "Processing..."
+                t('buttons.processing')
               ) : (
                 <>
                   <ArrowDownToLine className="mr-2 h-4 w-4" />
-                  Withdraw Now
+                  {t('buttons.withdraw')}
                 </>
               )}
             </Button>
@@ -192,8 +193,7 @@ export default function WithdrawPage() {
       <Card className="border-amber-500 bg-amber-50 dark:bg-amber-950">
         <CardContent className="pt-6">
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            <strong>Important:</strong> Withdrawals are typically processed within 1-3 business days. 
-            Ensure your account details are correct before confirming.
+            <strong>{t('important.title')}</strong> {t('important.message')}
           </p>
         </CardContent>
       </Card>

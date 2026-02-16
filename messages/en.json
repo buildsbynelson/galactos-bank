@@ -1,0 +1,515 @@
+{
+  "TransactionsList": {
+    "title": "Transactions",
+    "description": "View and manage your transaction history",
+    "searchPlaceholder": "Search transactions...",
+    "filterByType": "Filter by type",
+    "allTypes": "All Types",
+    "deposits": "Deposits",
+    "transfers": "Transfers",
+    "withdrawals": "Withdrawals",
+    "cardTitle": "Transaction History",
+    "transactionsFound": "transaction",
+    "transactionsFoundPlural": "transactions",
+    "found": "found",
+    "noTransactions": "No transactions found",
+    "makeTransfer": "Make a Transfer",
+    "type": {
+      "deposit": "Deposit",
+      "withdrawal": "Withdrawal",
+      "transfer": "Transfer",
+      "received": "Received"
+    },
+    "status": {
+      "completed": "completed",
+      "pending": "pending",
+      "failed": "failed"
+    },
+    "to": "To",
+    "from": "From"
+  },
+  "Sidebar": {
+    "brandName": "GalactosTrust Inc.",
+    "admin": {
+      "dashboard": "Dashboard",
+      "analytics": "Analytics",
+      "users": "Users",
+      "withdrawals": "Withdrawals",
+      "deposits": "Deposits",
+      "pendingTxns": "Pending Txns",
+      "transfers": "Transfers",
+      "pendingLoans": "Pending Loans"
+    },
+    "user": {
+      "dashboard": "Dashboard",
+      "myAccount": "My Account",
+      "transactions": "Transactions",
+      "myDeposits": "My Deposits",
+      "myWithdrawals": "My Withdrawals",
+      "loans": "Loans"
+    },
+    "transactionsLabel": "Transactions",
+    "support": "Support",
+    "bankingDashboard": "Banking Dashboard",
+    "inbox": "Inbox",
+    "quickCreate": "Quick Create",
+    "more": "More",
+    "actions": {
+      "open": "Open",
+      "share": "Share",
+      "delete": "Delete"
+    }
+  },
+  "LoanTiers": {
+    "apr": "APR",
+    "popular": "Popular"
+  },
+  "UserCards": {
+    "accountBalance": "Account Balance",
+    "quickActions": "Quick Actions",
+    "manageAccount": "Manage Your Account",
+    "deposit": "Deposit",
+    "transfer": "Transfer",
+    "withdraw": "Withdraw"
+  },
+  "DepositPage": {
+    "title": "Deposit Funds",
+    "description": "Add money to your account",
+    "currentBalance": "Current Balance",
+    "loading": "Loading...",
+    "errorLoadingBalance": "Error loading balance",
+    "tabs": {
+      "card": "Card",
+      "bankTransfer": "Bank Transfer"
+    },
+    "cardSection": {
+      "title": "Debit/Credit Card",
+      "description": "Enter your card details to deposit funds",
+      "cardNumber": "Card Number",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardholderName": "Cardholder Name",
+      "cardholderNamePlaceholder": "John Doe",
+      "expiryDate": "Expiry Date",
+      "expiryDatePlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "amount": "Amount",
+      "amountPlaceholder": "0.00"
+    },
+    "bankSection": {
+      "title": "Bank Transfer",
+      "description": "Link your bank account for deposits",
+      "accountNumber": "Account Number",
+      "accountNumberPlaceholder": "Enter your account number",
+      "routingNumber": "Routing Number",
+      "routingNumberPlaceholder": "Enter routing number",
+      "amount": "Amount",
+      "amountPlaceholder": "0.00",
+      "processingInfo": "Deposits require admin approval and may take 1-3 business days to process"
+    },
+    "buttons": {
+      "processing": "Processing...",
+      "submit": "Submit Deposit Request"
+    },
+    "warnings": {
+      "approvalRequired": "Approval Required:",
+      "approvalText": "All deposit requests must be reviewed and approved by an administrator. You will be notified once your deposit is processed.",
+      "secureTransactions": "Secure Transactions:",
+      "secureText": "All deposits are encrypted and processed securely. Your financial information is protected with bank-level security."
+    },
+    "errors": {
+      "invalidAmount": "Please enter a valid amount",
+      "fillCardDetails": "Please fill in all card details",
+      "fillBankDetails": "Please fill in all bank details",
+      "networkError": "Network error. Please try again."
+    }
+  },
+  "DepositSuccess": {
+    "done": "Done",
+    "title": "Deposit Pending Approval",
+    "description": "Your deposit request has been submitted and is awaiting admin approval",
+    "depositAmount": "Deposit Amount",
+    "paymentMethod": "Payment Method",
+    "transactionReference": "Transaction Reference",
+    "status": "Status",
+    "backToDashboard": "Back to Dashboard",
+    "backToDeposit": "Back to Deposit",
+    "loading": "Loading...",
+    "submittedAt": "Request submitted at",
+    "notifiedText": "You will be notified once it's reviewed.",
+    "note": "Note:",
+    "processingTime": "Deposits typically take 1-3 business days to be reviewed and processed."
+  },
+  "LoansPage": {
+    "heading": "Loan Tiers Designed for You",
+    "description": "Choose the loan tier that fits your financial needs — with transparent rates and flexible terms.",
+    "tiers": {
+      "personal": {
+        "name": "Personal Plan",
+        "info": "Monthly Interest Rate",
+        "features": {
+          "minAmount": "Minimum amount: USD 1,000",
+          "paymentType": "Payment Type: Partial",
+          "paymentEvery": "Payment every: 30 Days",
+          "intervalType": "Interval Type: Fixed",
+          "support": "Customer Support: Email Only"
+        },
+        "button": "Get Started"
+      },
+      "standard": {
+        "name": "Standard Plan",
+        "info": "Monthly Interest Rate",
+        "features": {
+          "minAmount": "Minimum amount: USD 10,000",
+          "paymentType": "Payment Type: Flexible",
+          "paymentEvery": "Payment every: 30 Days",
+          "intervalType": "Interval Type: Fixed",
+          "support": "Customer Support: 24/7 Chat & Email"
+        },
+        "button": "Get Started"
+      },
+      "executive": {
+        "name": "Executive Plan",
+        "info": "Monthly Interest Rate",
+        "features": {
+          "minAmount": "Minimum amount: USD 50,000",
+          "paymentType": "Payment Type: Customized",
+          "intervalType": "Interval Type: Fixed",
+          "loanTerm": "Loan Term: Up to 60 months",
+          "support": "Customer Support: Dedicated Account Manager"
+        },
+        "button": "Get Started"
+      }
+    }
+  },
+  "LoanForm": {
+    "tierNames": {
+      "personal": "Personal Plan",
+      "standard": "Standard Plan",
+      "executive": "Executive Plan"
+    },
+    "monthlyInterestRate": "Monthly Interest Rate",
+    "apr": "APR",
+    "minimumAmount": "Minimum Amount",
+    "loanDetails": {
+      "title": "Loan Details",
+      "loanAmount": "Loan Amount (USD)",
+      "minPlaceholder": "Min: $"
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "dateOfBirth": "Date of Birth",
+      "address": "Address",
+      "idNumber": "ID Number"
+    },
+    "employmentInfo": {
+      "title": "Employment Information",
+      "employer": "Employer Name",
+      "monthlyIncome": "Monthly Income (USD)",
+      "employmentDuration": "Employment Duration",
+      "durationPlaceholder": "e.g., 2 years"
+    },
+    "bankDetails": {
+      "title": "Bank Account Details",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
+      "accountName": "Account Name"
+    },
+    "cardDetails": {
+      "title": "Debit Card Details",
+      "cardNumber": "Card Number",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardHolderName": "Card Holder Name",
+      "cardHolderPlaceholder": "As shown on card",
+      "expiryDate": "Expiry Date",
+      "expiryPlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cardType": "Card Type",
+      "selectCardType": "Select card type",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "discover": "Discover"
+    },
+    "buttons": {
+      "submitting": "Submitting...",
+      "submit": "Submit Application"
+    }
+  },
+  "LoanPending": {
+    "status": {
+      "pending": {
+        "title": "Application Under Review",
+        "description": "Your loan application has been submitted successfully and is currently being reviewed by our team. We'll notify you via email once a decision has been made."
+      },
+      "approved": {
+        "title": "Application Approved!",
+        "description": "Congratulations! Your loan application has been approved. The funds will be credited to your account shortly."
+      },
+      "rejected": {
+        "title": "Application Rejected",
+        "description": "Unfortunately, your loan application was not approved at this time."
+      },
+      "disbursed": {
+        "title": "Funds Disbursed",
+        "description": "The loan amount has been successfully credited to your account. You can now access the funds."
+      }
+    },
+    "applicationDetails": "Application Details",
+    "reviewInfo": "Review your loan application information",
+    "fields": {
+      "applicationId": "Application ID",
+      "loanTier": "Loan Tier",
+      "apr": "APR",
+      "loanAmount": "Loan Amount",
+      "appliedOn": "Applied On",
+      "paymentType": "Payment Type"
+    },
+    "timeline": {
+      "title": "Timeline",
+      "submitted": "Submitted",
+      "reviewed": "Reviewed",
+      "disbursed": "Disbursed"
+    },
+    "transactionReference": "Transaction Reference",
+    "rejectionReason": "Rejection Reason",
+    "buttons": {
+      "goToDashboard": "Go to Dashboard",
+      "viewLoanTiers": "View Loan Tiers",
+      "applyAgain": "Apply Again",
+      "viewTransactions": "View Transactions"
+    },
+    "statusBadges": {
+      "pending": "PENDING",
+      "approved": "APPROVED",
+      "rejected": "REJECTED",
+      "disbursed": "DISBURSED"
+    }
+  },
+  "ProfilePage": {
+    "title": "Profile",
+    "description": "Manage your account information and preferences",
+    "profilePicture": {
+      "title": "Profile Picture",
+      "description": "Upload or update your profile picture"
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "description": "Your personal details and contact information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "verified": "Verified",
+      "notVerified": "Not Verified",
+      "phone": "Phone Number",
+      "country": "Country",
+      "notProvided": "Not provided"
+    },
+    "accountInfo": {
+      "title": "Account Information",
+      "description": "View your account details",
+      "accountNumber": "Account Number",
+      "currentBalance": "Current Balance",
+      "accountType": "Account Type",
+      "accountTypeValue": "Digital Banking Account"
+    },
+    "updateInfo": "To update your personal information, please contact support or visit your nearest branch."
+  },
+  "WithdrawPage": {
+    "title": "Withdraw Funds",
+    "description": "Transfer money from your account",
+    "successMessage": "Withdrawal processed successfully!",
+    "availableBalance": "Available Balance",
+    "loading": "Loading...",
+    "errorLoadingBalance": "Error loading balance",
+    "withdrawalDetails": {
+      "title": "Withdrawal Details",
+      "description": "Enter the amount and destination for your withdrawal",
+      "amount": "Amount",
+      "amountPlaceholder": "0.00",
+      "maximumWithdrawal": "Maximum withdrawal:",
+      "destinationAccount": "Destination Account Number",
+      "destinationPlaceholder": "Enter account number",
+      "notes": "Notes (Optional)",
+      "notesPlaceholder": "Add any additional notes"
+    },
+    "summary": {
+      "withdrawalFee": "Withdrawal Fee",
+      "totalAmount": "Total Amount"
+    },
+    "buttons": {
+      "processing": "Processing...",
+      "withdraw": "Withdraw Now"
+    },
+    "important": {
+      "title": "Important:",
+      "message": "Withdrawals are typically processed within 1-3 business days. Ensure your account details are correct before confirming."
+    }
+  },
+  "TransferPage": {
+    "title": "Transfer Money",
+    "description": "Send money to another account securely",
+    "availableBalance": "Available Balance",
+    "loading": "Loading...",
+    "errorLoadingBalance": "Error loading balance",
+    "transferDetails": {
+      "title": "Transfer Details",
+      "description": "Enter the recipient's information and transfer amount",
+      "recipientName": "Recipient Name",
+      "recipientNamePlaceholder": "Enter recipient's full name",
+      "bankName": "Bank Name",
+      "bankNamePlaceholder": "Enter bank name",
+      "accountNumber": "Account Number",
+      "accountNumberPlaceholder": "Enter recipient's account number",
+      "amount": "Amount",
+      "amountPlaceholder": "0.00",
+      "description": "Description (Optional)",
+      "descriptionPlaceholder": "What's this transfer for?"
+    },
+    "summary": {
+      "transferFee": "Transfer Fee",
+      "totalAmount": "Total Amount"
+    },
+    "buttons": {
+      "processing": "Processing...",
+      "transfer": "Transfer Funds"
+    },
+    "errors": {
+      "fillRequired": "Please fill in all required fields.",
+      "invalidAmount": "Please enter a valid amount.",
+      "insufficientBalance": "Insufficient balance for this transfer.",
+      "invalidAccountNumber": "Account number must be 8 digits."
+    },
+    "securityNotice": {
+      "title": "Security Notice:",
+      "message": "Always verify recipient details before transferring. Transfers cannot be reversed once completed."
+    }
+  },
+  "PinConfirmation": {
+    "title": "Confirm Transaction",
+    "description": "Enter your PIN to authorize this transaction",
+    "transactionSummary": "Transaction Summary",
+    "type": "Type",
+    "transfer": "Transfer",
+    "recipient": "Recipient",
+    "bank": "Bank",
+    "accountNumber": "Account Number",
+    "description": "Description",
+    "amount": "Amount",
+    "transactionPin": "Transaction PIN",
+    "pinPlaceholder": "Enter 4 digit PIN",
+    "buttons": {
+      "back": "Back",
+      "confirming": "Confirming...",
+      "confirm": "Confirm Transaction"
+    },
+    "securityMessage": "Your PIN is encrypted and secure. Never share your PIN with anyone.",
+    "loading": "Loading..."
+  },
+  "IMFVerification": {
+    "title": "IMF Verification Required",
+    "description": "Your account requires IMF code verification to complete this transaction",
+    "accountRestricted": {
+      "title": "Account Restricted",
+      "message": "Due to security measures, your account requires an IMF (International Monetary Fund) verification code to proceed with transfers. Please contact your support at help.galactostrustbacorp@gmail.com to obtain this code."
+    },
+    "enterCode": {
+      "title": "Enter IMF Code",
+      "description": "Enter the 4-digit code provided by your administrator",
+      "label": "IMF Verification Code",
+      "placeholder": "0000",
+      "hint": "Enter only the 4 digits (e.g., if code is IMF-8798, enter 8798)"
+    },
+    "buttons": {
+      "verifying": "Verifying...",
+      "verify": "Verify & Continue",
+      "cancel": "Cancel Transfer"
+    },
+    "howToGet": {
+      "title": "How to get your IMF code:",
+      "step1": "Contact your bank support for IMF enquiry",
+      "step2": "Support email at support.galactostrustbacorp@gmail.com",
+      "step3": "Or navigate to menubar and click on support.",
+      "step4": "Enter the 4-digit number portion only"
+    },
+    "securityNotice": {
+      "title": "Security Notice:",
+      "message": "Never share your account credentials. GalactosTrust staff will provide the IMF code but will never ask for your password."
+    },
+    "errors": {
+      "enterCode": "Please enter the 4-digit IMF code",
+      "invalidCode": "Invalid IMF code",
+      "transferDataNotFound": "Transfer data not found. Please try again.",
+      "transferFailed": "Transfer failed. Please try again.",
+      "networkError": "Network error. Please try again."
+    }
+  },
+  "TransferSuccess": {
+    "titlePending": "Transfer Pending Approval",
+    "titleCompleted": "Transaction Receipt",
+    "descriptionPending": "Your transfer is pending approval",
+    "receiptFor": "Receipt for transaction",
+    "transactionDetails": "Transaction Details",
+    "transactionId": "Transaction ID",
+    "transactionType": "Transaction Type",
+    "transfer": "Transfer",
+    "date": "Date",
+    "time": "Time",
+    "recipientInfo": "Recipient Information",
+    "accountName": "Account Name",
+    "bank": "Bank",
+    "accountNumber": "Account Number",
+    "paymentDetails": "Payment Details",
+    "transferAmount": "Transfer Amount",
+    "transactionFee": "Transaction Fee",
+    "balanceBefore": "Balance Before",
+    "balanceAfter": "Balance After",
+    "buttons": {
+      "back": "Back",
+      "backToDashboard": "Back to Dashboard"
+    },
+    "officialReceipt": "This is an official receipt for your transaction. Keep it for your records. If you have any questions, please contact our support team.",
+    "loading": "Loading...",
+    "status": {
+      "pending": "PENDING",
+      "completed": "COMPLETED",
+      "failed": "FAILED"
+    }
+  },
+  "TransactionReceipt": {
+    "title": "Transaction Receipt",
+    "receiptFor": "Receipt for transaction",
+    "transactionDetails": "Transaction Details",
+    "transactionId": "Transaction ID",
+    "transactionType": "Transaction Type",
+    "date": "Date",
+    "time": "Time",
+    "description": "Description",
+    "from": "From",
+    "to": "To",
+    "accountName": "Account Name",
+    "email": "Email",
+    "bank": "Bank",
+    "accountNumber": "Account Number",
+    "paymentDetails": "Payment Details",
+    "receivedAmount": "Received Amount",
+    "transferAmount": "Transfer Amount",
+    "transactionFee": "Transaction Fee",
+    "balanceBefore": "Balance Before",
+    "balanceAfter": "Balance After",
+    "officialReceipt": "This is an official receipt for your transaction. Keep it for your records. If you have any questions, please contact our support team.",
+    "status": {
+      "completed": "COMPLETED",
+      "pending": "PENDING",
+      "failed": "FAILED"
+    }
+  },
+  "ReceiptActions": {
+    "back": "Back",
+    "backToDashboard": "Back to Dashboard"
+  }
+}

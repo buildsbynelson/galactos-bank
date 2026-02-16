@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import { useTranslations } from 'next-intl'
 import { Button } from "@/components/ui/button"
 import { Download, Share2, ArrowLeft, Home } from "lucide-react"
 
@@ -27,10 +28,10 @@ interface ReceiptActionsProps {
 }
 
 export default function ReceiptActions({ receiptData }: ReceiptActionsProps) {
+  const t = useTranslations('ReceiptActions')
   const router = useRouter()
 
   const handleDownload = () => {
-    // Create receipt text
     const receiptText = `
 TRANSACTION RECEIPT
 ===================
@@ -57,7 +58,6 @@ New Balance: $${receiptData.balanceAfter.toFixed(2)}
 Generated: ${new Date().toLocaleString()}
     `.trim()
 
-    // Create and download file
     const blob = new Blob([receiptText], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -88,7 +88,7 @@ Generated: ${new Date().toLocaleString()}
       <div className="flex items-center justify-between">
         <Button variant="ghost" onClick={() => router.back()}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {t('back')}
         </Button>
         <div className="flex gap-2">
           <Button variant="outline" size="icon" onClick={handleShare}>
@@ -103,7 +103,7 @@ Generated: ${new Date().toLocaleString()}
       <div className="flex justify-center">
         <Button onClick={() => router.push('/user')} variant="outline" size="lg">
           <Home className="mr-2 h-4 w-4" />
-          Back to Dashboard
+          {t('backToDashboard')}
         </Button>
       </div>
     </>

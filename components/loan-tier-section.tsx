@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from 'next-intl'
 import { Button } from "@/components/ui/button";
 import {
 	Tooltip,
@@ -75,6 +76,8 @@ export function LoanTierCard({
 	className,
 	...props
 }: LoanTierCardProps) {
+	const t = useTranslations('LoanTiers')
+	
 	return (
 		<div
 			className={cn(
@@ -95,7 +98,7 @@ export function LoanTierCard({
 					{tier.highlighted && (
 						<p className="flex items-center gap-1 rounded-md border bg-background px-2 py-0.5 text-xs">
 							<Star className="h-3 w-3 fill-current" />
-							Popular
+							{t('popular')}
 						</p>
 					)}
 				</div>
@@ -106,7 +109,7 @@ export function LoanTierCard({
 						{tier.apr}%
 					</span>
 					<span className="text-muted-foreground text-sm">
-						APR
+						{t('apr')}
 					</span>
 				</h3>
 				<p className="font-normal text-muted-foreground text-sm">{tier.info}</p>

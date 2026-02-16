@@ -1,0 +1,515 @@
+{
+  "TransactionsList": {
+    "title": "Transações",
+    "description": "Visualize e gerencie seu histórico de transações",
+    "searchPlaceholder": "Pesquisar transações...",
+    "filterByType": "Filtrar por tipo",
+    "allTypes": "Todos os Tipos",
+    "deposits": "Depósitos",
+    "transfers": "Transferências",
+    "withdrawals": "Saques",
+    "cardTitle": "Histórico de Transações",
+    "transactionsFound": "transação",
+    "transactionsFoundPlural": "transações",
+    "found": "encontrada",
+    "noTransactions": "Nenhuma transação encontrada",
+    "makeTransfer": "Fazer uma Transferência",
+    "type": {
+      "deposit": "Depósito",
+      "withdrawal": "Saque",
+      "transfer": "Transferência",
+      "received": "Recebido"
+    },
+    "status": {
+      "completed": "concluído",
+      "pending": "pendente",
+      "failed": "falhou"
+    },
+    "to": "Para",
+    "from": "De"
+  },
+  "Sidebar": {
+    "brandName": "GalactosTrust Inc.",
+    "admin": {
+      "dashboard": "Painel",
+      "analytics": "Análises",
+      "users": "Usuários",
+      "withdrawals": "Saques",
+      "deposits": "Depósitos",
+      "pendingTxns": "Txns Pendentes",
+      "transfers": "Transferências",
+      "pendingLoans": "Empréstimos Pendentes"
+    },
+    "user": {
+      "dashboard": "Painel",
+      "myAccount": "Minha Conta",
+      "transactions": "Transações",
+      "myDeposits": "Meus Depósitos",
+      "myWithdrawals": "Meus Saques",
+      "loans": "Empréstimos"
+    },
+    "transactionsLabel": "Transações",
+    "support": "Suporte",
+    "bankingDashboard": "Painel Bancário",
+    "inbox": "Caixa de Entrada",
+    "quickCreate": "Criação Rápida",
+    "more": "Mais",
+    "actions": {
+      "open": "Abrir",
+      "share": "Compartilhar",
+      "delete": "Excluir"
+    }
+  },
+  "LoanTiers": {
+    "apr": "TAE",
+    "popular": "Popular"
+  },
+  "UserCards": {
+    "accountBalance": "Saldo da Conta",
+    "quickActions": "Ações Rápidas",
+    "manageAccount": "Gerenciar sua Conta",
+    "deposit": "Depositar",
+    "transfer": "Transferir",
+    "withdraw": "Sacar"
+  },
+  "DepositPage": {
+    "title": "Depositar Fundos",
+    "description": "Adicionar dinheiro à sua conta",
+    "currentBalance": "Saldo Atual",
+    "loading": "Carregando...",
+    "errorLoadingBalance": "Erro ao carregar saldo",
+    "tabs": {
+      "card": "Cartão",
+      "bankTransfer": "Transferência Bancária"
+    },
+    "cardSection": {
+      "title": "Cartão de Débito/Crédito",
+      "description": "Insira os detalhes do seu cartão para depositar fundos",
+      "cardNumber": "Número do Cartão",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardholderName": "Nome do Titular",
+      "cardholderNamePlaceholder": "João Silva",
+      "expiryDate": "Data de Validade",
+      "expiryDatePlaceholder": "MM/AA",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "amount": "Valor",
+      "amountPlaceholder": "0.00"
+    },
+    "bankSection": {
+      "title": "Transferência Bancária",
+      "description": "Vincule sua conta bancária para depósitos",
+      "accountNumber": "Número da Conta",
+      "accountNumberPlaceholder": "Digite o número da sua conta",
+      "routingNumber": "Número de Roteamento",
+      "routingNumberPlaceholder": "Digite o número de roteamento",
+      "amount": "Valor",
+      "amountPlaceholder": "0.00",
+      "processingInfo": "Os depósitos requerem aprovação administrativa e podem levar de 1 a 3 dias úteis para processar"
+    },
+    "buttons": {
+      "processing": "Processando...",
+      "submit": "Enviar Solicitação de Depósito"
+    },
+    "warnings": {
+      "approvalRequired": "Aprovação Necessária:",
+      "approvalText": "Todas as solicitações de depósito devem ser revisadas e aprovadas por um administrador. Você será notificado quando seu depósito for processado.",
+      "secureTransactions": "Transações Seguras:",
+      "secureText": "Todos os depósitos são criptografados e processados com segurança. Suas informações financeiras estão protegidas com segurança de nível bancário."
+    },
+    "errors": {
+      "invalidAmount": "Por favor, insira um valor válido",
+      "fillCardDetails": "Por favor, preencha todos os detalhes do cartão",
+      "fillBankDetails": "Por favor, preencha todos os detalhes bancários",
+      "networkError": "Erro de rede. Por favor, tente novamente."
+    }
+  },
+  "DepositSuccess": {
+    "done": "Concluído",
+    "title": "Depósito Aguardando Aprovação",
+    "description": "Sua solicitação de depósito foi enviada e está aguardando aprovação administrativa",
+    "depositAmount": "Valor do Depósito",
+    "paymentMethod": "Método de Pagamento",
+    "transactionReference": "Referência da Transação",
+    "status": "Status",
+    "backToDashboard": "Voltar ao Painel",
+    "backToDeposit": "Voltar ao Depósito",
+    "loading": "Carregando...",
+    "submittedAt": "Solicitação enviada em",
+    "notifiedText": "Você será notificado assim que for revisado.",
+    "note": "Nota:",
+    "processingTime": "Os depósitos geralmente levam de 1 a 3 dias úteis para serem revisados e processados."
+  },
+  "LoansPage": {
+    "heading": "Níveis de Empréstimo Projetados para Você",
+    "description": "Escolha o nível de empréstimo que se adequa às suas necessidades financeiras - com taxas transparentes e termos flexíveis.",
+    "tiers": {
+      "personal": {
+        "name": "Plano Pessoal",
+        "info": "Taxa de Juros Mensal",
+        "features": {
+          "minAmount": "Valor mínimo: USD 1.000",
+          "paymentType": "Tipo de Pagamento: Parcial",
+          "paymentEvery": "Pagamento a cada: 30 Dias",
+          "intervalType": "Tipo de Intervalo: Fixo",
+          "support": "Suporte ao Cliente: Somente E-mail"
+        },
+        "button": "Começar"
+      },
+      "standard": {
+        "name": "Plano Padrão",
+        "info": "Taxa de Juros Mensal",
+        "features": {
+          "minAmount": "Valor mínimo: USD 10.000",
+          "paymentType": "Tipo de Pagamento: Flexível",
+          "paymentEvery": "Pagamento a cada: 30 Dias",
+          "intervalType": "Tipo de Intervalo: Fixo",
+          "support": "Suporte ao Cliente: Chat e E-mail 24/7"
+        },
+        "button": "Começar"
+      },
+      "executive": {
+        "name": "Plano Executivo",
+        "info": "Taxa de Juros Mensal",
+        "features": {
+          "minAmount": "Valor mínimo: USD 50.000",
+          "paymentType": "Tipo de Pagamento: Personalizado",
+          "intervalType": "Tipo de Intervalo: Fixo",
+          "loanTerm": "Prazo do Empréstimo: Até 60 meses",
+          "support": "Suporte ao Cliente: Gerente de Conta Dedicado"
+        },
+        "button": "Começar"
+      }
+    }
+  },
+  "LoanForm": {
+    "tierNames": {
+      "personal": "Plano Pessoal",
+      "standard": "Plano Padrão",
+      "executive": "Plano Executivo"
+    },
+    "monthlyInterestRate": "Taxa de Juros Mensal",
+    "apr": "TAE",
+    "minimumAmount": "Valor Mínimo",
+    "loanDetails": {
+      "title": "Detalhes do Empréstimo",
+      "loanAmount": "Valor do Empréstimo (USD)",
+      "minPlaceholder": "Mín: $"
+    },
+    "personalInfo": {
+      "title": "Informações Pessoais",
+      "fullName": "Nome Completo",
+      "email": "E-mail",
+      "phone": "Número de Telefone",
+      "dateOfBirth": "Data de Nascimento",
+      "address": "Endereço",
+      "idNumber": "Número de Identificação"
+    },
+    "employmentInfo": {
+      "title": "Informações de Emprego",
+      "employer": "Nome do Empregador",
+      "monthlyIncome": "Renda Mensal (USD)",
+      "employmentDuration": "Duração do Emprego",
+      "durationPlaceholder": "ex., 2 anos"
+    },
+    "bankDetails": {
+      "title": "Detalhes da Conta Bancária",
+      "bankName": "Nome do Banco",
+      "accountNumber": "Número da Conta",
+      "accountName": "Nome da Conta"
+    },
+    "cardDetails": {
+      "title": "Detalhes do Cartão de Débito",
+      "cardNumber": "Número do Cartão",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardHolderName": "Nome do Titular do Cartão",
+      "cardHolderPlaceholder": "Como mostrado no cartão",
+      "expiryDate": "Data de Validade",
+      "expiryPlaceholder": "MM/AA",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cardType": "Tipo de Cartão",
+      "selectCardType": "Selecionar tipo de cartão",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "discover": "Discover"
+    },
+    "buttons": {
+      "submitting": "Enviando...",
+      "submit": "Enviar Solicitação"
+    }
+  },
+  "LoanPending": {
+    "status": {
+      "pending": {
+        "title": "Solicitação em Análise",
+        "description": "Sua solicitação de empréstimo foi enviada com sucesso e está sendo analisada por nossa equipe. Notificaremos você por e-mail assim que uma decisão for tomada."
+      },
+      "approved": {
+        "title": "Solicitação Aprovada!",
+        "description": "Parabéns! Sua solicitação de empréstimo foi aprovada. Os fundos serão creditados em sua conta em breve."
+      },
+      "rejected": {
+        "title": "Solicitação Rejeitada",
+        "description": "Infelizmente, sua solicitação de empréstimo não foi aprovada no momento."
+      },
+      "disbursed": {
+        "title": "Fundos Desembolsados",
+        "description": "O valor do empréstimo foi creditado com sucesso em sua conta. Você pode acessar os fundos agora."
+      }
+    },
+    "applicationDetails": "Detalhes da Solicitação",
+    "reviewInfo": "Revise as informações da sua solicitação de empréstimo",
+    "fields": {
+      "applicationId": "ID da Solicitação",
+      "loanTier": "Nível do Empréstimo",
+      "apr": "TAE",
+      "loanAmount": "Valor do Empréstimo",
+      "appliedOn": "Solicitado em",
+      "paymentType": "Tipo de Pagamento"
+    },
+    "timeline": {
+      "title": "Cronograma",
+      "submitted": "Enviado",
+      "reviewed": "Revisado",
+      "disbursed": "Desembolsado"
+    },
+    "transactionReference": "Referência da Transação",
+    "rejectionReason": "Motivo da Rejeição",
+    "buttons": {
+      "goToDashboard": "Ir ao Painel",
+      "viewLoanTiers": "Ver Níveis de Empréstimo",
+      "applyAgain": "Solicitar Novamente",
+      "viewTransactions": "Ver Transações"
+    },
+    "statusBadges": {
+      "pending": "PENDENTE",
+      "approved": "APROVADO",
+      "rejected": "REJEITADO",
+      "disbursed": "DESEMBOLSADO"
+    }
+  },
+  "ProfilePage": {
+    "title": "Perfil",
+    "description": "Gerencie as informações e preferências da sua conta",
+    "profilePicture": {
+      "title": "Foto do Perfil",
+      "description": "Enviar ou atualizar sua foto de perfil"
+    },
+    "personalInfo": {
+      "title": "Informações Pessoais",
+      "description": "Seus detalhes pessoais e informações de contato",
+      "firstName": "Primeiro Nome",
+      "lastName": "Sobrenome",
+      "email": "E-mail",
+      "verified": "Verificado",
+      "notVerified": "Não Verificado",
+      "phone": "Número de Telefone",
+      "country": "País",
+      "notProvided": "Não fornecido"
+    },
+    "accountInfo": {
+      "title": "Informações da Conta",
+      "description": "Visualize os detalhes da sua conta",
+      "accountNumber": "Número da Conta",
+      "currentBalance": "Saldo Atual",
+      "accountType": "Tipo de Conta",
+      "accountTypeValue": "Conta Bancária Digital"
+    },
+    "updateInfo": "Para atualizar suas informações pessoais, entre em contato com o suporte ou visite sua agência mais próxima."
+  },
+  "WithdrawPage": {
+    "title": "Sacar Fundos",
+    "description": "Transferir dinheiro da sua conta",
+    "successMessage": "Saque processado com sucesso!",
+    "availableBalance": "Saldo Disponível",
+    "loading": "Carregando...",
+    "errorLoadingBalance": "Erro ao carregar saldo",
+    "withdrawalDetails": {
+      "title": "Detalhes do Saque",
+      "description": "Insira o valor e destino para seu saque",
+      "amount": "Valor",
+      "amountPlaceholder": "0.00",
+      "maximumWithdrawal": "Saque máximo:",
+      "destinationAccount": "Número da Conta de Destino",
+      "destinationPlaceholder": "Digite o número da conta",
+      "notes": "Notas (Opcional)",
+      "notesPlaceholder": "Adicionar notas adicionais"
+    },
+    "summary": {
+      "withdrawalFee": "Taxa de Saque",
+      "totalAmount": "Valor Total"
+    },
+    "buttons": {
+      "processing": "Processando...",
+      "withdraw": "Sacar Agora"
+    },
+    "important": {
+      "title": "Importante:",
+      "message": "Os saques geralmente são processados em 1-3 dias úteis. Verifique se os detalhes da sua conta estão corretos antes de confirmar."
+    }
+  },
+  "TransferPage": {
+    "title": "Transferir Dinheiro",
+    "description": "Enviar dinheiro para outra conta com segurança",
+    "availableBalance": "Saldo Disponível",
+    "loading": "Carregando...",
+    "errorLoadingBalance": "Erro ao carregar saldo",
+    "transferDetails": {
+      "title": "Detalhes da Transferência",
+      "description": "Insira as informações do destinatário e o valor da transferência",
+      "recipientName": "Nome do Destinatário",
+      "recipientNamePlaceholder": "Digite o nome completo do destinatário",
+      "bankName": "Nome do Banco",
+      "bankNamePlaceholder": "Digite o nome do banco",
+      "accountNumber": "Número da Conta",
+      "accountNumberPlaceholder": "Digite o número da conta do destinatário",
+      "amount": "Valor",
+      "amountPlaceholder": "0.00",
+      "description": "Descrição (Opcional)",
+      "descriptionPlaceholder": "Para que é esta transferência?"
+    },
+    "summary": {
+      "transferFee": "Taxa de Transferência",
+      "totalAmount": "Valor Total"
+    },
+    "buttons": {
+      "processing": "Processando...",
+      "transfer": "Transferir Fundos"
+    },
+    "errors": {
+      "fillRequired": "Por favor, preencha todos os campos obrigatórios.",
+      "invalidAmount": "Por favor, insira um valor válido.",
+      "insufficientBalance": "Saldo insuficiente para esta transferência.",
+      "invalidAccountNumber": "O número da conta deve ter 8 dígitos."
+    },
+    "securityNotice": {
+      "title": "Aviso de Segurança:",
+      "message": "Sempre verifique os detalhes do destinatário antes de transferir. As transferências não podem ser revertidas após conclusão."
+    }
+  },
+  "PinConfirmation": {
+    "title": "Confirmar Transação",
+    "description": "Digite seu PIN para autorizar esta transação",
+    "transactionSummary": "Resumo da Transação",
+    "type": "Tipo",
+    "transfer": "Transferência",
+    "recipient": "Destinatário",
+    "bank": "Banco",
+    "accountNumber": "Número da Conta",
+    "description": "Descrição",
+    "amount": "Valor",
+    "transactionPin": "PIN da Transação",
+    "pinPlaceholder": "Digite o PIN de 4 dígitos",
+    "buttons": {
+      "back": "Voltar",
+      "confirming": "Confirmando...",
+      "confirm": "Confirmar Transação"
+    },
+    "securityMessage": "Seu PIN é criptografado e seguro. Nunca compartilhe seu PIN com ninguém.",
+    "loading": "Carregando..."
+  },
+  "IMFVerification": {
+    "title": "Verificação IMF Necessária",
+    "description": "Sua conta requer verificação de código IMF para concluir esta transação",
+    "accountRestricted": {
+      "title": "Conta Restrita",
+      "message": "Devido a medidas de segurança, sua conta requer um código de verificação IMF (Fundo Monetário Internacional) para prosseguir com transferências. Entre em contato com seu suporte em help.galactostrustbacorp@gmail.com para obter este código."
+    },
+    "enterCode": {
+      "title": "Inserir Código IMF",
+      "description": "Digite o código de 4 dígitos fornecido pelo seu administrador",
+      "label": "Código de Verificação IMF",
+      "placeholder": "0000",
+      "hint": "Digite apenas os 4 dígitos (ex., se o código for IMF-8798, digite 8798)"
+    },
+    "buttons": {
+      "verifying": "Verificando...",
+      "verify": "Verificar e Continuar",
+      "cancel": "Cancelar Transferência"
+    },
+    "howToGet": {
+      "title": "Como obter seu código IMF:",
+      "step1": "Entre em contato com o suporte do seu banco para consulta IMF",
+      "step2": "E-mail de suporte em support.galactostrustbacorp@gmail.com",
+      "step3": "Ou navegue até a barra de menu e clique em suporte.",
+      "step4": "Digite apenas a parte numérica de 4 dígitos"
+    },
+    "securityNotice": {
+      "title": "Aviso de Segurança:",
+      "message": "Nunca compartilhe suas credenciais de conta. A equipe do GalactosTrust fornecerá o código IMF, mas nunca pedirá sua senha."
+    },
+    "errors": {
+      "enterCode": "Por favor, digite o código IMF de 4 dígitos",
+      "invalidCode": "Código IMF inválido",
+      "transferDataNotFound": "Dados de transferência não encontrados. Por favor, tente novamente.",
+      "transferFailed": "Transferência falhou. Por favor, tente novamente.",
+      "networkError": "Erro de rede. Por favor, tente novamente."
+    }
+  },
+  "TransferSuccess": {
+    "titlePending": "Transferência Aguardando Aprovação",
+    "titleCompleted": "Recibo da Transação",
+    "descriptionPending": "Sua transferência está aguardando aprovação",
+    "receiptFor": "Recibo da transação",
+    "transactionDetails": "Detalhes da Transação",
+    "transactionId": "ID da Transação",
+    "transactionType": "Tipo de Transação",
+    "transfer": "Transferência",
+    "date": "Data",
+    "time": "Hora",
+    "recipientInfo": "Informações do Destinatário",
+    "accountName": "Nome da Conta",
+    "bank": "Banco",
+    "accountNumber": "Número da Conta",
+    "paymentDetails": "Detalhes do Pagamento",
+    "transferAmount": "Valor da Transferência",
+    "transactionFee": "Taxa de Transação",
+    "balanceBefore": "Saldo Anterior",
+    "balanceAfter": "Saldo Posterior",
+    "buttons": {
+      "back": "Voltar",
+      "backToDashboard": "Voltar ao Painel"
+    },
+    "officialReceipt": "Este é um recibo oficial da sua transação. Guarde-o para seus registros. Se tiver alguma dúvida, entre em contato com nossa equipe de suporte.",
+    "loading": "Carregando...",
+    "status": {
+      "pending": "PENDENTE",
+      "completed": "CONCLUÍDO",
+      "failed": "FALHOU"
+    }
+  },
+  "TransactionReceipt": {
+    "title": "Recibo da Transação",
+    "receiptFor": "Recibo da transação",
+    "transactionDetails": "Detalhes da Transação",
+    "transactionId": "ID da Transação",
+    "transactionType": "Tipo de Transação",
+    "date": "Data",
+    "time": "Hora",
+    "description": "Descrição",
+    "from": "De",
+    "to": "Para",
+    "accountName": "Nome da Conta",
+    "email": "E-mail",
+    "bank": "Banco",
+    "accountNumber": "Número da Conta",
+    "paymentDetails": "Detalhes do Pagamento",
+    "receivedAmount": "Valor Recebido",
+    "transferAmount": "Valor da Transferência",
+    "transactionFee": "Taxa de Transação",
+    "balanceBefore": "Saldo Anterior",
+    "balanceAfter": "Saldo Posterior",
+    "officialReceipt": "Este é um recibo oficial da sua transação. Guarde-o para seus registros. Se tiver alguma dúvida, entre em contato com nossa equipe de suporte.",
+    "status": {
+      "completed": "CONCLUÍDO",
+      "pending": "PENDENTE",
+      "failed": "FALHOU"
+    }
+  },
+  "ReceiptActions": {
+    "back": "Voltar",
+    "backToDashboard": "Voltar ao Painel"
+  }
+}

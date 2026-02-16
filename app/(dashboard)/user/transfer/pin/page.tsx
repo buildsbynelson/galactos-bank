@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useTranslations } from 'next-intl'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -17,6 +18,7 @@ interface TransferData {
 }
 
 export default function PinConfirmationPage() {
+  const t = useTranslations('PinConfirmation')
   const router = useRouter()
   const [pin, setPin] = useState("")
   const [error, setError] = useState("")
@@ -25,7 +27,6 @@ export default function PinConfirmationPage() {
   const [transferData, setTransferData] = useState<TransferData | null>(null)
 
   useEffect(() => {
-    // Get transfer data from sessionStorage
     const data = sessionStorage.getItem("transferData")
     if (!data) {
       router.push("/user/transfer")
@@ -60,30 +61,24 @@ export default function PinConfirmationPage() {
           amount: transferData.amount,
           description: transferData.description,
           recipientName: transferData.recipientName,
-          // ✏️ ADDED: Pass bankName to API
           bankName: transferData.bankName,
           pin,
-          imfVerified: false, // First attempt without IMF
+          imfVerified: false,
         }),
       })
 
       const data = await response.json()
 
-      // Check if account is restricted - need IMF verification
       if (response.status === 403 && data.error === "ACCOUNT_RESTRICTED") {
-        console.log("Account restricted - redirecting to IMF verification")
-        
-        // Make sure transfer data is saved for IMF page to retry
         sessionStorage.setItem("transferData", JSON.stringify({
           receiverAccountNumber: transferData.receiverAccountNumber,
           amount: transferData.amount,
           description: transferData.description,
-          pin, // Save PIN so we don't ask again
+          pin,
           recipientName: transferData.recipientName,
           bankName: transferData.bankName
         }))
         
-        // Redirect to IMF verification page
         router.push("/user/transfer/imf-verification")
         return
       }
@@ -94,8 +89,6 @@ export default function PinConfirmationPage() {
         return
       }
 
-      // Transfer successful - store result and redirect to success page
-      console.log("Transfer successful:", data)
       sessionStorage.setItem("transferResult", JSON.stringify(data))
       router.push("/user/transfer/transfer-sucess")
       
@@ -109,7 +102,7 @@ export default function PinConfirmationPage() {
   if (!transferData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p>Loading...</p>
+        <p>{t('loading')}</p>
       </div>
     )
   }
@@ -120,41 +113,41 @@ export default function PinConfirmationPage() {
         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
           <Lock className="h-8 w-8 text-primary" />
         </div>
-        <h1 className="text-2xl font-bold tracking-tight">Confirm Transaction</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t('title')}</h1>
         <p className="text-muted-foreground">
-          Enter your PIN to authorize this transaction
+          {t('description')}
         </p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Transaction Summary</CardTitle>
+          <CardTitle>{t('transactionSummary')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Type</span>
-            <span className="font-medium">Transfer</span>
+            <span className="text-muted-foreground">{t('type')}</span>
+            <span className="font-medium">{t('transfer')}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Recipient</span>
+            <span className="text-muted-foreground">{t('recipient')}</span>
             <span className="font-medium">{transferData.recipientName}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Bank</span>
+            <span className="text-muted-foreground">{t('bank')}</span>
             <span className="font-medium">{transferData.bankName}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Account Number</span>
+            <span className="text-muted-foreground">{t('accountNumber')}</span>
             <span className="font-medium font-mono">{transferData.receiverAccountNumber}</span>
           </div>
           {transferData.description && (
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Description</span>
+              <span className="text-muted-foreground">{t('description')}</span>
               <span className="font-medium">{transferData.description}</span>
             </div>
           )}
           <div className="flex justify-between border-t pt-3">
-            <span className="font-semibold">Amount</span>
+            <span className="font-semibold">{t('amount')}</span>
             <span className="text-xl font-bold text-primary">
               ${parseFloat(transferData.amount).toFixed(2)}
             </span>
@@ -172,12 +165,12 @@ export default function PinConfirmationPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="pin">Transaction PIN</Label>
+              <Label htmlFor="pin">{t('transactionPin')}</Label>
               <div className="relative">
                 <Input
                   id="pin"
                   type={showPin ? "text" : "password"}
-                  placeholder="Enter 4 digit PIN"
+                  placeholder={t('pinPlaceholder')}
                   maxLength={4}
                   value={pin}
                   onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
@@ -208,14 +201,14 @@ export default function PinConfirmationPage() {
                 disabled={loading}
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back
+                {t('buttons.back')}
               </Button>
               <Button
                 type="submit"
                 className="flex-1"
                 disabled={pin.length !== 4 || loading}
               >
-                {loading ? "Confirming..." : "Confirm Transaction"}
+                {loading ? t('buttons.confirming') : t('buttons.confirm')}
               </Button>
             </div>
           </form>
@@ -224,7 +217,7 @@ export default function PinConfirmationPage() {
 
       <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
         <p className="text-center text-sm text-blue-800 dark:text-blue-200">
-          Your PIN is encrypted and secure. Never share your PIN with anyone.
+          {t('securityMessage')}
         </p>
       </div>
     </div>

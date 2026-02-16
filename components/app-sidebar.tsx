@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from 'next-intl'
 import {
   IconChartBar,
   IconDashboard,
@@ -27,103 +28,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-// Admin navigation
-const adminData = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/admin",
-      icon: IconDashboard,
-    },
-    {
-      title: "Analytics",
-      url: "/admin/analytics",
-      icon: IconChartBar,
-    },
-    {
-      title: "Users",
-      url: "/admin/users",
-      icon: IconUsers,
-    },
-  ],
-  documents: [
-    {
-      name: "Withdrawals",
-      url: "/admin/withdrawals",
-      icon: IconDatabase,
-    },
-    {
-      name: "Deposits",
-      url: "/admin/deposits",
-      icon: IconReport,
-    },
-    {
-      name: "Pending Txns",
-      url: "/admin/transactions/pending",
-      icon: IconReport,
-    },
-    {
-      name: "Transfers",
-      url: "/admin/transfers",
-      icon: IconFileWord,
-    },
-
-    {
-      name: "Pending Loans",
-      url: "/admin/pending-loans",
-      icon: IconCoins,
-    },
-  ],
-}
-
-// User navigation
-const userData = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/user",
-      icon: IconDashboard,
-    },
-    {
-      title: "My Account",
-      url: "/user/profile",
-      icon: IconUsers,
-    },
-    {
-      title: "Transactions",
-      url: "/user/transactions",
-      icon: IconChartBar,
-    },
-  ],
-  documents: [
-    {
-      name: "My Deposits",
-      url: "/user/transactions",
-      icon: IconReport,
-    },
-    
-    {
-      name: "My Withdrawals",
-      url: "/user/transactions",
-      icon: IconDatabase,
-    },
-
-    {
-      name: "Loans",
-      url: "/user/loans",
-      icon: IconCoins,
-    },
-  ],
-}
-
-const navSecondary = [
-  {
-    title: "Support",
-    url: "mailto:help.galactostrustbacorp@gmail.com?subject=Support Request - GalactosTrust Bank",
-    icon: IconHelpCircle,
-  },
-]
-
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   user: {
     name: string
@@ -134,6 +38,102 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const t = useTranslations('Sidebar')
+  
+  // Admin navigation
+  const adminData = {
+    navMain: [
+      {
+        title: t('admin.dashboard'),
+        url: "/admin",
+        icon: IconDashboard,
+      },
+      {
+        title: t('admin.analytics'),
+        url: "/admin/analytics",
+        icon: IconChartBar,
+      },
+      {
+        title: t('admin.users'),
+        url: "/admin/users",
+        icon: IconUsers,
+      },
+    ],
+    documents: [
+      {
+        name: t('admin.withdrawals'),
+        url: "/admin/withdrawals",
+        icon: IconDatabase,
+      },
+      {
+        name: t('admin.deposits'),
+        url: "/admin/deposits",
+        icon: IconReport,
+      },
+      {
+        name: t('admin.pendingTxns'),
+        url: "/admin/transactions/pending",
+        icon: IconReport,
+      },
+      {
+        name: t('admin.transfers'),
+        url: "/admin/transfers",
+        icon: IconFileWord,
+      },
+      {
+        name: t('admin.pendingLoans'),
+        url: "/admin/pending-loans",
+        icon: IconCoins,
+      },
+    ],
+  }
+
+  // User navigation
+  const userData = {
+    navMain: [
+      {
+        title: t('user.dashboard'),
+        url: "/user",
+        icon: IconDashboard,
+      },
+      {
+        title: t('user.myAccount'),
+        url: "/user/profile",
+        icon: IconUsers,
+      },
+      {
+        title: t('user.transactions'),
+        url: "/user/transactions",
+        icon: IconChartBar,
+      },
+    ],
+    documents: [
+      {
+        name: t('user.myDeposits'),
+        url: "/user/transactions",
+        icon: IconReport,
+      },
+      {
+        name: t('user.myWithdrawals'),
+        url: "/user/transactions",
+        icon: IconDatabase,
+      },
+      {
+        name: t('user.loans'),
+        url: "/user/loans",
+        icon: IconCoins,
+      },
+    ],
+  }
+
+  const navSecondary = [
+    {
+      title: t('support'),
+      url: "mailto:help.galactostrustbacorp@gmail.com?subject=Support Request - GalactosTrust Bank",
+      icon: IconHelpCircle,
+    },
+  ]
+
   // Choose navigation based on user role
   const data = user.role === "ADMIN" ? adminData : userData
 
@@ -149,7 +149,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
               <a href={user.role === "ADMIN" ? "/admin" : "/dashboard"}>
                 <IconInnerShadowTop className="!size-5" />
                 <span className="text-base font-semibold">
-                  GalactosTrust Inc.
+                  {t('brandName')}
                 </span>
               </a>
             </SidebarMenuButton>

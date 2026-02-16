@@ -1,0 +1,515 @@
+{
+  "TransactionsList": {
+    "title": "लेनदेन",
+    "description": "अपना लेनदेन इतिहास देखें और प्रबंधित करें",
+    "searchPlaceholder": "लेनदेन खोजें...",
+    "filterByType": "प्रकार से फ़िल्टर करें",
+    "allTypes": "सभी प्रकार",
+    "deposits": "जमा",
+    "transfers": "स्थानांतरण",
+    "withdrawals": "निकासी",
+    "cardTitle": "लेनदेन इतिहास",
+    "transactionsFound": "लेनदेन",
+    "transactionsFoundPlural": "लेनदेन",
+    "found": "मिला",
+    "noTransactions": "कोई लेनदेन नहीं मिला",
+    "makeTransfer": "स्थानांतरण करें",
+    "type": {
+      "deposit": "जमा",
+      "withdrawal": "निकासी",
+      "transfer": "स्थानांतरण",
+      "received": "प्राप्त"
+    },
+    "status": {
+      "completed": "पूर्ण",
+      "pending": "लंबित",
+      "failed": "विफल"
+    },
+    "to": "को",
+    "from": "से"
+  },
+  "Sidebar": {
+    "brandName": "GalactosTrust Inc.",
+    "admin": {
+      "dashboard": "डैशबोर्ड",
+      "analytics": "विश्लेषण",
+      "users": "उपयोगकर्ता",
+      "withdrawals": "निकासी",
+      "deposits": "जमा",
+      "pendingTxns": "लंबित लेनदेन",
+      "transfers": "स्थानांतरण",
+      "pendingLoans": "लंबित ऋण"
+    },
+    "user": {
+      "dashboard": "डैशबोर्ड",
+      "myAccount": "मेरा खाता",
+      "transactions": "लेनदेन",
+      "myDeposits": "मेरी जमा",
+      "myWithdrawals": "मेरी निकासी",
+      "loans": "ऋण"
+    },
+    "transactionsLabel": "लेनदेन",
+    "support": "सहायता",
+    "bankingDashboard": "बैंकिंग डैशबोर्ड",
+    "inbox": "इनबॉक्स",
+    "quickCreate": "त्वरित बनाएं",
+    "more": "अधिक",
+    "actions": {
+      "open": "खोलें",
+      "share": "साझा करें",
+      "delete": "हटाएं"
+    }
+  },
+  "LoanTiers": {
+    "apr": "वार्षिक प्रतिशत दर",
+    "popular": "लोकप्रिय"
+  },
+  "UserCards": {
+    "accountBalance": "खाता शेष",
+    "quickActions": "त्वरित कार्रवाई",
+    "manageAccount": "अपना खाता प्रबंधित करें",
+    "deposit": "जमा करें",
+    "transfer": "स्थानांतरण",
+    "withdraw": "निकासी"
+  },
+  "DepositPage": {
+    "title": "धनराशि जमा करें",
+    "description": "अपने खाते में पैसे जोड़ें",
+    "currentBalance": "वर्तमान शेष",
+    "loading": "लोड हो रहा है...",
+    "errorLoadingBalance": "शेष लोड करने में त्रुटि",
+    "tabs": {
+      "card": "कार्ड",
+      "bankTransfer": "बैंक स्थानांतरण"
+    },
+    "cardSection": {
+      "title": "डेबिट/क्रेडिट कार्ड",
+      "description": "धनराशि जमा करने के लिए अपने कार्ड विवरण दर्ज करें",
+      "cardNumber": "कार्ड नंबर",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardholderName": "कार्डधारक का नाम",
+      "cardholderNamePlaceholder": "राज कुमार",
+      "expiryDate": "समाप्ति तिथि",
+      "expiryDatePlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "amount": "राशि",
+      "amountPlaceholder": "0.00"
+    },
+    "bankSection": {
+      "title": "बैंक स्थानांतरण",
+      "description": "जमा के लिए अपना बैंक खाता लिंक करें",
+      "accountNumber": "खाता संख्या",
+      "accountNumberPlaceholder": "अपना खाता संख्या दर्ज करें",
+      "routingNumber": "रूटिंग नंबर",
+      "routingNumberPlaceholder": "रूटिंग नंबर दर्ज करें",
+      "amount": "राशि",
+      "amountPlaceholder": "0.00",
+      "processingInfo": "जमा के लिए प्रशासनिक अनुमोदन की आवश्यकता है और प्रक्रिया में 1-3 व्यावसायिक दिन लग सकते हैं"
+    },
+    "buttons": {
+      "processing": "प्रक्रिया जारी है...",
+      "submit": "जमा अनुरोध सबमिट करें"
+    },
+    "warnings": {
+      "approvalRequired": "अनुमोदन आवश्यक:",
+      "approvalText": "सभी जमा अनुरोधों की समीक्षा और प्रशासक द्वारा अनुमोदन आवश्यक है। आपकी जमा प्रक्रिया होने पर आपको सूचित किया जाएगा।",
+      "secureTransactions": "सुरक्षित लेनदेन:",
+      "secureText": "सभी जमा एन्क्रिप्टेड और सुरक्षित रूप से संसाधित किए जाते हैं। आपकी वित्तीय जानकारी बैंक-स्तरीय सुरक्षा से सुरक्षित है।"
+    },
+    "errors": {
+      "invalidAmount": "कृपया मान्य राशि दर्ज करें",
+      "fillCardDetails": "कृपया सभी कार्ड विवरण भरें",
+      "fillBankDetails": "कृपया सभी बैंक विवरण भरें",
+      "networkError": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।"
+    }
+  },
+  "DepositSuccess": {
+    "done": "पूर्ण",
+    "title": "जमा अनुमोदन लंबित",
+    "description": "आपका जमा अनुरोध सबमिट किया गया है और प्रशासनिक अनुमोदन की प्रतीक्षा में है",
+    "depositAmount": "जमा राशि",
+    "paymentMethod": "भुगतान विधि",
+    "transactionReference": "लेनदेन संदर्भ",
+    "status": "स्थिति",
+    "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+    "backToDeposit": "जमा पर वापस जाएं",
+    "loading": "लोड हो रहा है...",
+    "submittedAt": "अनुरोध सबमिट किया गया",
+    "notifiedText": "समीक्षा होने पर आपको सूचित किया जाएगा।",
+    "note": "नोट:",
+    "processingTime": "जमा की समीक्षा और प्रक्रिया में आमतौर पर 1-3 व्यावसायिक दिन लगते हैं।"
+  },
+  "LoansPage": {
+    "heading": "आपके लिए डिज़ाइन किए गए ऋण स्तर",
+    "description": "अपनी वित्तीय आवश्यकताओं के अनुरूप ऋण स्तर चुनें - पारदर्शी दरों और लचीली शर्तों के साथ।",
+    "tiers": {
+      "personal": {
+        "name": "व्यक्तिगत योजना",
+        "info": "मासिक ब्याज दर",
+        "features": {
+          "minAmount": "न्यूनतम राशि: USD 1,000",
+          "paymentType": "भुगतान प्रकार: आंशिक",
+          "paymentEvery": "भुगतान हर: 30 दिन",
+          "intervalType": "अंतराल प्रकार: निश्चित",
+          "support": "ग्राहक सहायता: केवल ईमेल"
+        },
+        "button": "शुरू करें"
+      },
+      "standard": {
+        "name": "मानक योजना",
+        "info": "मासिक ब्याज दर",
+        "features": {
+          "minAmount": "न्यूनतम राशि: USD 10,000",
+          "paymentType": "भुगतान प्रकार: लचीला",
+          "paymentEvery": "भुगतान हर: 30 दिन",
+          "intervalType": "अंतराल प्रकार: निश्चित",
+          "support": "ग्राहक सहायता: 24/7 चैट और ईमेल"
+        },
+        "button": "शुरू करें"
+      },
+      "executive": {
+        "name": "कार्यकारी योजना",
+        "info": "मासिक ब्याज दर",
+        "features": {
+          "minAmount": "न्यूनतम राशि: USD 50,000",
+          "paymentType": "भुगतान प्रकार: अनुकूलित",
+          "intervalType": "अंतराल प्रकार: निश्चित",
+          "loanTerm": "ऋण अवधि: 60 महीनों तक",
+          "support": "ग्राहक सहायता: समर्पित खाता प्रबंधक"
+        },
+        "button": "शुरू करें"
+      }
+    }
+  },
+  "LoanForm": {
+    "tierNames": {
+      "personal": "व्यक्तिगत योजना",
+      "standard": "मानक योजना",
+      "executive": "कार्यकारी योजना"
+    },
+    "monthlyInterestRate": "मासिक ब्याज दर",
+    "apr": "वार्षिक प्रतिशत दर",
+    "minimumAmount": "न्यूनतम राशि",
+    "loanDetails": {
+      "title": "ऋण विवरण",
+      "loanAmount": "ऋण राशि (USD)",
+      "minPlaceholder": "न्यूनतम: $"
+    },
+    "personalInfo": {
+      "title": "व्यक्तिगत जानकारी",
+      "fullName": "पूरा नाम",
+      "email": "ईमेल",
+      "phone": "फ़ोन नंबर",
+      "dateOfBirth": "जन्म तिथि",
+      "address": "पता",
+      "idNumber": "पहचान संख्या"
+    },
+    "employmentInfo": {
+      "title": "रोजगार जानकारी",
+      "employer": "नियोक्ता का नाम",
+      "monthlyIncome": "मासिक आय (USD)",
+      "employmentDuration": "रोजगार अवधि",
+      "durationPlaceholder": "उदा., 2 वर्ष"
+    },
+    "bankDetails": {
+      "title": "बैंक खाता विवरण",
+      "bankName": "बैंक का नाम",
+      "accountNumber": "खाता संख्या",
+      "accountName": "खाता नाम"
+    },
+    "cardDetails": {
+      "title": "डेबिट कार्ड विवरण",
+      "cardNumber": "कार्ड नंबर",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardHolderName": "कार्डधारक का नाम",
+      "cardHolderPlaceholder": "कार्ड पर दिखाया गया",
+      "expiryDate": "समाप्ति तिथि",
+      "expiryPlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cardType": "कार्ड प्रकार",
+      "selectCardType": "कार्ड प्रकार चुनें",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "discover": "Discover"
+    },
+    "buttons": {
+      "submitting": "सबमिट हो रहा है...",
+      "submit": "आवेदन सबमिट करें"
+    }
+  },
+  "LoanPending": {
+    "status": {
+      "pending": {
+        "title": "आवेदन समीक्षाधीन",
+        "description": "आपका ऋण आवेदन सफलतापूर्वक सबमिट किया गया है और हमारी टीम द्वारा समीक्षा की जा रही है। निर्णय होने पर हम आपको ईमेल के माध्यम से सूचित करेंगे।"
+      },
+      "approved": {
+        "title": "आवेदन स्वीकृत!",
+        "description": "बधाई हो! आपका ऋण आवेदन स्वीकृत हो गया है। धनराशि शीघ्र ही आपके खाते में जमा कर दी जाएगी।"
+      },
+      "rejected": {
+        "title": "आवेदन अस्वीकृत",
+        "description": "दुर्भाग्य से, आपका ऋण आवेदन इस समय स्वीकृत नहीं किया गया।"
+      },
+      "disbursed": {
+        "title": "धनराशि वितरित",
+        "description": "ऋण राशि सफलतापूर्वक आपके खाते में जमा कर दी गई है। अब आप धनराशि का उपयोग कर सकते हैं।"
+      }
+    },
+    "applicationDetails": "आवेदन विवरण",
+    "reviewInfo": "अपने ऋण आवेदन की जानकारी की समीक्षा करें",
+    "fields": {
+      "applicationId": "आवेदन ID",
+      "loanTier": "ऋण स्तर",
+      "apr": "वार्षिक प्रतिशत दर",
+      "loanAmount": "ऋण राशि",
+      "appliedOn": "आवेदन किया गया",
+      "paymentType": "भुगतान प्रकार"
+    },
+    "timeline": {
+      "title": "समयरेखा",
+      "submitted": "सबमिट किया गया",
+      "reviewed": "समीक्षा की गई",
+      "disbursed": "वितरित"
+    },
+    "transactionReference": "लेनदेन संदर्भ",
+    "rejectionReason": "अस्वीकृति कारण",
+    "buttons": {
+      "goToDashboard": "डैशबोर्ड पर जाएं",
+      "viewLoanTiers": "ऋण स्तर देखें",
+      "applyAgain": "फिर से आवेदन करें",
+      "viewTransactions": "लेनदेन देखें"
+    },
+    "statusBadges": {
+      "pending": "लंबित",
+      "approved": "स्वीकृत",
+      "rejected": "अस्वीकृत",
+      "disbursed": "वितरित"
+    }
+  },
+  "ProfilePage": {
+    "title": "प्रोफ़ाइल",
+    "description": "अपनी खाता जानकारी और प्राथमिकताएं प्रबंधित करें",
+    "profilePicture": {
+      "title": "प्रोफ़ाइल चित्र",
+      "description": "अपनी प्रोफ़ाइल तस्वीर अपलोड या अपडेट करें"
+    },
+    "personalInfo": {
+      "title": "व्यक्तिगत जानकारी",
+      "description": "आपकी व्यक्तिगत विवरण और संपर्क जानकारी",
+      "firstName": "पहला नाम",
+      "lastName": "अंतिम नाम",
+      "email": "ईमेल",
+      "verified": "सत्यापित",
+      "notVerified": "सत्यापित नहीं",
+      "phone": "फ़ोन नंबर",
+      "country": "देश",
+      "notProvided": "प्रदान नहीं किया गया"
+    },
+    "accountInfo": {
+      "title": "खाता जानकारी",
+      "description": "अपने खाते का विवरण देखें",
+      "accountNumber": "खाता संख्या",
+      "currentBalance": "वर्तमान शेष",
+      "accountType": "खाता प्रकार",
+      "accountTypeValue": "डिजिटल बैंकिंग खाता"
+    },
+    "updateInfo": "अपनी व्यक्तिगत जानकारी अपडेट करने के लिए, कृपया सहायता से संपर्क करें या अपनी निकटतम शाखा में जाएं।"
+  },
+  "WithdrawPage": {
+    "title": "धनराशि निकालें",
+    "description": "अपने खाते से पैसे ट्रांसफर करें",
+    "successMessage": "निकासी सफलतापूर्वक संसाधित!",
+    "availableBalance": "उपलब्ध शेष",
+    "loading": "लोड हो रहा है...",
+    "errorLoadingBalance": "शेष लोड करने में त्रुटि",
+    "withdrawalDetails": {
+      "title": "निकासी विवरण",
+      "description": "अपनी निकासी के लिए राशि और गंतव्य दर्ज करें",
+      "amount": "राशि",
+      "amountPlaceholder": "0.00",
+      "maximumWithdrawal": "अधिकतम निकासी:",
+      "destinationAccount": "गंतव्य खाता संख्या",
+      "destinationPlaceholder": "खाता संख्या दर्ज करें",
+      "notes": "नोट्स (वैकल्पिक)",
+      "notesPlaceholder": "अतिरिक्त नोट्स जोड़ें"
+    },
+    "summary": {
+      "withdrawalFee": "निकासी शुल्क",
+      "totalAmount": "कुल राशि"
+    },
+    "buttons": {
+      "processing": "प्रक्रिया जारी है...",
+      "withdraw": "अभी निकालें"
+    },
+    "important": {
+      "title": "महत्वपूर्ण:",
+      "message": "निकासी आमतौर पर 1-3 व्यावसायिक दिनों में संसाधित की जाती है। पुष्टि करने से पहले सुनिश्चित करें कि आपके खाते का विवरण सही है।"
+    }
+  },
+  "TransferPage": {
+    "title": "पैसे ट्रांसफर करें",
+    "description": "सुरक्षित रूप से दूसरे खाते में पैसे भेजें",
+    "availableBalance": "उपलब्ध शेष",
+    "loading": "लोड हो रहा है...",
+    "errorLoadingBalance": "शेष लोड करने में त्रुटि",
+    "transferDetails": {
+      "title": "स्थानांतरण विवरण",
+      "description": "प्राप्तकर्ता की जानकारी और स्थानांतरण राशि दर्ज करें",
+      "recipientName": "प्राप्तकर्ता का नाम",
+      "recipientNamePlaceholder": "प्राप्तकर्ता का पूरा नाम दर्ज करें",
+      "bankName": "बैंक का नाम",
+      "bankNamePlaceholder": "बैंक का नाम दर्ज करें",
+      "accountNumber": "खाता संख्या",
+      "accountNumberPlaceholder": "प्राप्तकर्ता की खाता संख्या दर्ज करें",
+      "amount": "राशि",
+      "amountPlaceholder": "0.00",
+      "description": "विवरण (वैकल्पिक)",
+      "descriptionPlaceholder": "यह स्थानांतरण किस लिए है?"
+    },
+    "summary": {
+      "transferFee": "स्थानांतरण शुल्क",
+      "totalAmount": "कुल राशि"
+    },
+    "buttons": {
+      "processing": "प्रक्रिया जारी है...",
+      "transfer": "धनराशि स्थानांतरित करें"
+    },
+    "errors": {
+      "fillRequired": "कृपया सभी आवश्यक फ़ील्ड भरें।",
+      "invalidAmount": "कृपया मान्य राशि दर्ज करें।",
+      "insufficientBalance": "इस स्थानांतरण के लिए अपर्याप्त शेष।",
+      "invalidAccountNumber": "खाता संख्या 8 अंकों की होनी चाहिए।"
+    },
+    "securityNotice": {
+      "title": "सुरक्षा सूचना:",
+      "message": "स्थानांतरण से पहले हमेशा प्राप्तकर्ता विवरण सत्यापित करें। एक बार पूर्ण होने पर स्थानांतरण वापस नहीं किया जा सकता।"
+    }
+  },
+  "PinConfirmation": {
+    "title": "लेनदेन की पुष्टि करें",
+    "description": "इस लेनदेन को अधिकृत करने के लिए अपना PIN दर्ज करें",
+    "transactionSummary": "लेनदेन सारांश",
+    "type": "प्रकार",
+    "transfer": "स्थानांतरण",
+    "recipient": "प्राप्तकर्ता",
+    "bank": "बैंक",
+    "accountNumber": "खाता संख्या",
+    "description": "विवरण",
+    "amount": "राशि",
+    "transactionPin": "लेनदेन PIN",
+    "pinPlaceholder": "4 अंकों का PIN दर्ज करें",
+    "buttons": {
+      "back": "पीछे",
+      "confirming": "पुष्टि हो रही है...",
+      "confirm": "लेनदेन की पुष्टि करें"
+    },
+    "securityMessage": "आपका PIN एन्क्रिप्टेड और सुरक्षित है। अपना PIN कभी किसी के साथ साझा न करें।",
+    "loading": "लोड हो रहा है..."
+  },
+  "IMFVerification": {
+    "title": "IMF सत्यापन आवश्यक",
+    "description": "इस लेनदेन को पूर्ण करने के लिए आपके खाते को IMF कोड सत्यापन की आवश्यकता है",
+    "accountRestricted": {
+      "title": "खाता प्रतिबंधित",
+      "message": "सुरक्षा उपायों के कारण, आपके खाते को स्थानांतरण के साथ आगे बढ़ने के लिए IMF (अंतर्राष्ट्रीय मुद्रा कोष) सत्यापन कोड की आवश्यकता है। कृपया यह कोड प्राप्त करने के लिए help.galactostrustbacorp@gmail.com पर अपने समर्थन से संपर्क करें।"
+    },
+    "enterCode": {
+      "title": "IMF कोड दर्ज करें",
+      "description": "अपने प्रशासक द्वारा प्रदान किया गया 4-अंकों का कोड दर्ज करें",
+      "label": "IMF सत्यापन कोड",
+      "placeholder": "0000",
+      "hint": "केवल 4 अंक दर्ज करें (उदा., यदि कोड IMF-8798 है, तो 8798 दर्ज करें)"
+    },
+    "buttons": {
+      "verifying": "सत्यापित हो रहा है...",
+      "verify": "सत्यापित करें और जारी रखें",
+      "cancel": "स्थानांतरण रद्द करें"
+    },
+    "howToGet": {
+      "title": "अपना IMF कोड कैसे प्राप्त करें:",
+      "step1": "IMF पूछताछ के लिए अपने बैंक समर्थन से संपर्क करें",
+      "step2": "support.galactostrustbacorp@gmail.com पर समर्थन ईमेल",
+      "step3": "या मेन्यूबार पर नेविगेट करें और समर्थन पर क्लिक करें।",
+      "step4": "केवल 4-अंकों का संख्यात्मक भाग दर्ज करें"
+    },
+    "securityNotice": {
+      "title": "सुरक्षा सूचना:",
+      "message": "अपने खाते की साख कभी साझा न करें। GalactosTrust स्टाफ IMF कोड प्रदान करेगा लेकिन कभी आपका पासवर्ड नहीं मांगेगा।"
+    },
+    "errors": {
+      "enterCode": "कृपया 4-अंकों का IMF कोड दर्ज करें",
+      "invalidCode": "अमान्य IMF कोड",
+      "transferDataNotFound": "स्थानांतरण डेटा नहीं मिला। कृपया पुनः प्रयास करें।",
+      "transferFailed": "स्थानांतरण विफल। कृपया पुनः प्रयास करें।",
+      "networkError": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।"
+    }
+  },
+  "TransferSuccess": {
+    "titlePending": "स्थानांतरण अनुमोदन लंबित",
+    "titleCompleted": "लेनदेन रसीद",
+    "descriptionPending": "आपका स्थानांतरण अनुमोदन लंबित है",
+    "receiptFor": "लेनदेन के लिए रसीद",
+    "transactionDetails": "लेनदेन विवरण",
+    "transactionId": "लेनदेन ID",
+    "transactionType": "लेनदेन प्रकार",
+    "transfer": "स्थानांतरण",
+    "date": "तारीख",
+    "time": "समय",
+    "recipientInfo": "प्राप्तकर्ता जानकारी",
+    "accountName": "खाता नाम",
+    "bank": "बैंक",
+    "accountNumber": "खाता संख्या",
+    "paymentDetails": "भुगतान विवरण",
+    "transferAmount": "स्थानांतरण राशि",
+    "transactionFee": "लेनदेन शुल्क",
+    "balanceBefore": "पहले की शेष राशि",
+    "balanceAfter": "बाद की शेष राशि",
+    "buttons": {
+      "back": "पीछे",
+      "backToDashboard": "डैशबोर्ड पर वापस जाएं"
+    },
+    "officialReceipt": "यह आपके लेनदेन की आधिकारिक रसीद है। इसे अपने रिकॉर्ड के लिए रखें। यदि आपके कोई प्रश्न हैं, तो कृपया हमारी सहायता टीम से संपर्क करें।",
+    "loading": "लोड हो रहा है...",
+    "status": {
+      "pending": "लंबित",
+      "completed": "पूर्ण",
+      "failed": "विफल"
+    }
+  },
+  "TransactionReceipt": {
+    "title": "लेनदेन रसीद",
+    "receiptFor": "लेनदेन के लिए रसीद",
+    "transactionDetails": "लेनदेन विवरण",
+    "transactionId": "लेनदेन ID",
+    "transactionType": "लेनदेन प्रकार",
+    "date": "तारीख",
+    "time": "समय",
+    "description": "विवरण",
+    "from": "से",
+    "to": "को",
+    "accountName": "खाता नाम",
+    "email": "ईमेल",
+    "bank": "बैंक",
+    "accountNumber": "खाता संख्या",
+    "paymentDetails": "भुगतान विवरण",
+    "receivedAmount": "प्राप्त राशि",
+    "transferAmount": "स्थानांतरण राशि",
+    "transactionFee": "लेनदेन शुल्क",
+    "balanceBefore": "पहले की शेष राशि",
+    "balanceAfter": "बाद की शेष राशि",
+    "officialReceipt": "यह आपके लेनदेन की आधिकारिक रसीद है। इसे अपने रिकॉर्ड के लिए रखें। यदि आपके कोई प्रश्न हैं, तो कृपया हमारी सहायता टीम से संपर्क करें।",
+    "status": {
+      "completed": "पूर्ण",
+      "pending": "लंबित",
+      "failed": "विफल"
+    }
+  },
+  "ReceiptActions": {
+    "back": "पीछे",
+    "backToDashboard": "डैशबोर्ड पर वापस जाएं"
+  }
+}

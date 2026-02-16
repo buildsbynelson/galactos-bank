@@ -1,0 +1,515 @@
+{
+  "TransactionsList": {
+    "title": "المعاملات",
+    "description": "عرض وإدارة سجل معاملاتك",
+    "searchPlaceholder": "البحث في المعاملات...",
+    "filterByType": "تصفية حسب النوع",
+    "allTypes": "جميع الأنواع",
+    "deposits": "الإيداعات",
+    "transfers": "التحويلات",
+    "withdrawals": "السحوبات",
+    "cardTitle": "سجل المعاملات",
+    "transactionsFound": "معاملة",
+    "transactionsFoundPlural": "معاملات",
+    "found": "تم العثور",
+    "noTransactions": "لم يتم العثور على معاملات",
+    "makeTransfer": "إجراء تحويل",
+    "type": {
+      "deposit": "إيداع",
+      "withdrawal": "سحب",
+      "transfer": "تحويل",
+      "received": "مستلم"
+    },
+    "status": {
+      "completed": "مكتمل",
+      "pending": "قيد الانتظار",
+      "failed": "فشل"
+    },
+    "to": "إلى",
+    "from": "من"
+  },
+  "Sidebar": {
+    "brandName": "GalactosTrust Inc.",
+    "admin": {
+      "dashboard": "لوحة التحكم",
+      "analytics": "التحليلات",
+      "users": "المستخدمون",
+      "withdrawals": "السحوبات",
+      "deposits": "الإيداعات",
+      "pendingTxns": "المعاملات المعلقة",
+      "transfers": "التحويلات",
+      "pendingLoans": "القروض المعلقة"
+    },
+    "user": {
+      "dashboard": "لوحة التحكم",
+      "myAccount": "حسابي",
+      "transactions": "المعاملات",
+      "myDeposits": "إيداعاتي",
+      "myWithdrawals": "سحوباتي",
+      "loans": "القروض"
+    },
+    "transactionsLabel": "المعاملات",
+    "support": "الدعم",
+    "bankingDashboard": "لوحة التحكم المصرفية",
+    "inbox": "صندوق الوارد",
+    "quickCreate": "إنشاء سريع",
+    "more": "المزيد",
+    "actions": {
+      "open": "فتح",
+      "share": "مشاركة",
+      "delete": "حذف"
+    }
+  },
+  "LoanTiers": {
+    "apr": "معدل الفائدة السنوي",
+    "popular": "شائع"
+  },
+  "UserCards": {
+    "accountBalance": "رصيد الحساب",
+    "quickActions": "إجراءات سريعة",
+    "manageAccount": "إدارة حسابك",
+    "deposit": "إيداع",
+    "transfer": "تحويل",
+    "withdraw": "سحب"
+  },
+  "DepositPage": {
+    "title": "إيداع الأموال",
+    "description": "إضافة أموال إلى حسابك",
+    "currentBalance": "الرصيد الحالي",
+    "loading": "جاري التحميل...",
+    "errorLoadingBalance": "خطأ في تحميل الرصيد",
+    "tabs": {
+      "card": "بطاقة",
+      "bankTransfer": "تحويل بنكي"
+    },
+    "cardSection": {
+      "title": "بطاقة الخصم/الائتمان",
+      "description": "أدخل تفاصيل بطاقتك لإيداع الأموال",
+      "cardNumber": "رقم البطاقة",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardholderName": "اسم حامل البطاقة",
+      "cardholderNamePlaceholder": "أحمد محمد",
+      "expiryDate": "تاريخ الانتهاء",
+      "expiryDatePlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "amount": "المبلغ",
+      "amountPlaceholder": "0.00"
+    },
+    "bankSection": {
+      "title": "تحويل بنكي",
+      "description": "ربط حسابك البنكي للإيداعات",
+      "accountNumber": "رقم الحساب",
+      "accountNumberPlaceholder": "أدخل رقم حسابك",
+      "routingNumber": "رقم التوجيه",
+      "routingNumberPlaceholder": "أدخل رقم التوجيه",
+      "amount": "المبلغ",
+      "amountPlaceholder": "0.00",
+      "processingInfo": "تتطلب الإيداعات موافقة إدارية وقد تستغرق من 1 إلى 3 أيام عمل للمعالجة"
+    },
+    "buttons": {
+      "processing": "جاري المعالجة...",
+      "submit": "إرسال طلب الإيداع"
+    },
+    "warnings": {
+      "approvalRequired": "الموافقة مطلوبة:",
+      "approvalText": "يجب مراجعة جميع طلبات الإيداع والموافقة عليها من قبل المسؤول. سيتم إخطارك بمجرد معالجة إيداعك.",
+      "secureTransactions": "معاملات آمنة:",
+      "secureText": "جميع الإيداعات مشفرة ومعالجة بشكل آمن. معلوماتك المالية محمية بأمان على مستوى البنوك."
+    },
+    "errors": {
+      "invalidAmount": "الرجاء إدخال مبلغ صالح",
+      "fillCardDetails": "الرجاء ملء جميع تفاصيل البطاقة",
+      "fillBankDetails": "الرجاء ملء جميع التفاصيل البنكية",
+      "networkError": "خطأ في الشبكة. الرجاء المحاولة مرة أخرى."
+    }
+  },
+  "DepositSuccess": {
+    "done": "تم",
+    "title": "الإيداع في انتظار الموافقة",
+    "description": "تم إرسال طلب الإيداع الخاص بك وهو في انتظار الموافقة الإدارية",
+    "depositAmount": "مبلغ الإيداع",
+    "paymentMethod": "طريقة الدفع",
+    "transactionReference": "مرجع المعاملة",
+    "status": "الحالة",
+    "backToDashboard": "العودة إلى لوحة التحكم",
+    "backToDeposit": "العودة إلى الإيداع",
+    "loading": "جاري التحميل...",
+    "submittedAt": "تم تقديم الطلب في",
+    "notifiedText": "سيتم إخطارك بمجرد مراجعته.",
+    "note": "ملاحظة:",
+    "processingTime": "عادةً ما تستغرق الإيداعات من 1 إلى 3 أيام عمل للمراجعة والمعالجة."
+  },
+  "LoansPage": {
+    "heading": "مستويات القروض المصممة لك",
+    "description": "اختر مستوى القرض الذي يناسب احتياجاتك المالية - مع معدلات شفافة وشروط مرنة.",
+    "tiers": {
+      "personal": {
+        "name": "الخطة الشخصية",
+        "info": "معدل الفائدة الشهري",
+        "features": {
+          "minAmount": "الحد الأدنى للمبلغ: 1,000 دولار أمريكي",
+          "paymentType": "نوع الدفع: جزئي",
+          "paymentEvery": "الدفع كل: 30 يومًا",
+          "intervalType": "نوع الفترة: ثابت",
+          "support": "دعم العملاء: البريد الإلكتروني فقط"
+        },
+        "button": "ابدأ"
+      },
+      "standard": {
+        "name": "الخطة القياسية",
+        "info": "معدل الفائدة الشهري",
+        "features": {
+          "minAmount": "الحد الأدنى للمبلغ: 10,000 دولار أمريكي",
+          "paymentType": "نوع الدفع: مرن",
+          "paymentEvery": "الدفع كل: 30 يومًا",
+          "intervalType": "نوع الفترة: ثابت",
+          "support": "دعم العملاء: دردشة وبريد إلكتروني على مدار الساعة طوال أيام الأسبوع"
+        },
+        "button": "ابدأ"
+      },
+      "executive": {
+        "name": "الخطة التنفيذية",
+        "info": "معدل الفائدة الشهري",
+        "features": {
+          "minAmount": "الحد الأدنى للمبلغ: 50,000 دولار أمريكي",
+          "paymentType": "نوع الدفع: مخصص",
+          "intervalType": "نوع الفترة: ثابت",
+          "loanTerm": "مدة القرض: حتى 60 شهرًا",
+          "support": "دعم العملاء: مدير حساب مخصص"
+        },
+        "button": "ابدأ"
+      }
+    }
+  },
+  "LoanForm": {
+    "tierNames": {
+      "personal": "الخطة الشخصية",
+      "standard": "الخطة القياسية",
+      "executive": "الخطة التنفيذية"
+    },
+    "monthlyInterestRate": "معدل الفائدة الشهري",
+    "apr": "معدل الفائدة السنوي",
+    "minimumAmount": "الحد الأدنى للمبلغ",
+    "loanDetails": {
+      "title": "تفاصيل القرض",
+      "loanAmount": "مبلغ القرض (بالدولار الأمريكي)",
+      "minPlaceholder": "الحد الأدنى: $"
+    },
+    "personalInfo": {
+      "title": "المعلومات الشخصية",
+      "fullName": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "dateOfBirth": "تاريخ الميلاد",
+      "address": "العنوان",
+      "idNumber": "رقم الهوية"
+    },
+    "employmentInfo": {
+      "title": "معلومات التوظيف",
+      "employer": "اسم صاحب العمل",
+      "monthlyIncome": "الدخل الشهري (بالدولار الأمريكي)",
+      "employmentDuration": "مدة التوظيف",
+      "durationPlaceholder": "مثلاً، سنتان"
+    },
+    "bankDetails": {
+      "title": "تفاصيل الحساب البنكي",
+      "bankName": "اسم البنك",
+      "accountNumber": "رقم الحساب",
+      "accountName": "اسم الحساب"
+    },
+    "cardDetails": {
+      "title": "تفاصيل بطاقة الخصم",
+      "cardNumber": "رقم البطاقة",
+      "cardNumberPlaceholder": "1234 5678 9012 3456",
+      "cardHolderName": "اسم حامل البطاقة",
+      "cardHolderPlaceholder": "كما يظهر على البطاقة",
+      "expiryDate": "تاريخ الانتهاء",
+      "expiryPlaceholder": "MM/YY",
+      "cvv": "CVV",
+      "cvvPlaceholder": "123",
+      "cardType": "نوع البطاقة",
+      "selectCardType": "اختر نوع البطاقة",
+      "visa": "Visa",
+      "mastercard": "Mastercard",
+      "amex": "American Express",
+      "discover": "Discover"
+    },
+    "buttons": {
+      "submitting": "جاري الإرسال...",
+      "submit": "إرسال الطلب"
+    }
+  },
+  "LoanPending": {
+    "status": {
+      "pending": {
+        "title": "الطلب قيد المراجعة",
+        "description": "تم تقديم طلب القرض الخاص بك بنجاح ويتم مراجعته حاليًا من قبل فريقنا. سنخطرك عبر البريد الإلكتروني بمجرد اتخاذ قرار."
+      },
+      "approved": {
+        "title": "تمت الموافقة على الطلب!",
+        "description": "تهانينا! تمت الموافقة على طلب القرض الخاص بك. سيتم إضافة الأموال إلى حسابك قريبًا."
+      },
+      "rejected": {
+        "title": "تم رفض الطلب",
+        "description": "للأسف، لم تتم الموافقة على طلب القرض الخاص بك في هذا الوقت."
+      },
+      "disbursed": {
+        "title": "تم صرف الأموال",
+        "description": "تم إضافة مبلغ القرض بنجاح إلى حسابك. يمكنك الآن الوصول إلى الأموال."
+      }
+    },
+    "applicationDetails": "تفاصيل الطلب",
+    "reviewInfo": "راجع معلومات طلب القرض الخاص بك",
+    "fields": {
+      "applicationId": "معرف الطلب",
+      "loanTier": "مستوى القرض",
+      "apr": "معدل الفائدة السنوي",
+      "loanAmount": "مبلغ القرض",
+      "appliedOn": "تم التقديم في",
+      "paymentType": "نوع الدفع"
+    },
+    "timeline": {
+      "title": "الجدول الزمني",
+      "submitted": "تم التقديم",
+      "reviewed": "تمت المراجعة",
+      "disbursed": "تم الصرف"
+    },
+    "transactionReference": "مرجع المعاملة",
+    "rejectionReason": "سبب الرفض",
+    "buttons": {
+      "goToDashboard": "الانتقال إلى لوحة التحكم",
+      "viewLoanTiers": "عرض مستويات القروض",
+      "applyAgain": "التقديم مرة أخرى",
+      "viewTransactions": "عرض المعاملات"
+    },
+    "statusBadges": {
+      "pending": "قيد الانتظار",
+      "approved": "تمت الموافقة",
+      "rejected": "مرفوض",
+      "disbursed": "تم الصرف"
+    }
+  },
+  "ProfilePage": {
+    "title": "الملف الشخصي",
+    "description": "إدارة معلومات حسابك وتفضيلاتك",
+    "profilePicture": {
+      "title": "صورة الملف الشخصي",
+      "description": "تحميل أو تحديث صورة ملفك الشخصي"
+    },
+    "personalInfo": {
+      "title": "المعلومات الشخصية",
+      "description": "تفاصيلك الشخصية ومعلومات الاتصال",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "verified": "تم التحقق",
+      "notVerified": "لم يتم التحقق",
+      "phone": "رقم الهاتف",
+      "country": "البلد",
+      "notProvided": "غير محدد"
+    },
+    "accountInfo": {
+      "title": "معلومات الحساب",
+      "description": "عرض تفاصيل حسابك",
+      "accountNumber": "رقم الحساب",
+      "currentBalance": "الرصيد الحالي",
+      "accountType": "نوع الحساب",
+      "accountTypeValue": "حساب بنكي رقمي"
+    },
+    "updateInfo": "لتحديث معلوماتك الشخصية، يرجى الاتصال بالدعم أو زيارة أقرب فرع لك."
+  },
+  "WithdrawPage": {
+    "title": "سحب الأموال",
+    "description": "تحويل الأموال من حسابك",
+    "successMessage": "تمت معالجة السحب بنجاح!",
+    "availableBalance": "الرصيد المتاح",
+    "loading": "جاري التحميل...",
+    "errorLoadingBalance": "خطأ في تحميل الرصيد",
+    "withdrawalDetails": {
+      "title": "تفاصيل السحب",
+      "description": "أدخل المبلغ والوجهة للسحب",
+      "amount": "المبلغ",
+      "amountPlaceholder": "0.00",
+      "maximumWithdrawal": "الحد الأقصى للسحب:",
+      "destinationAccount": "رقم حساب الوجهة",
+      "destinationPlaceholder": "أدخل رقم الحساب",
+      "notes": "ملاحظات (اختياري)",
+      "notesPlaceholder": "إضافة ملاحظات إضافية"
+    },
+    "summary": {
+      "withdrawalFee": "رسوم السحب",
+      "totalAmount": "المبلغ الإجمالي"
+    },
+    "buttons": {
+      "processing": "جاري المعالجة...",
+      "withdraw": "سحب الآن"
+    },
+    "important": {
+      "title": "مهم:",
+      "message": "عادةً ما تتم معالجة السحوبات خلال 1-3 أيام عمل. تأكد من صحة تفاصيل حسابك قبل التأكيد."
+    }
+  },
+  "TransferPage": {
+    "title": "تحويل الأموال",
+    "description": "إرسال الأموال إلى حساب آخر بشكل آمن",
+    "availableBalance": "الرصيد المتاح",
+    "loading": "جاري التحميل...",
+    "errorLoadingBalance": "خطأ في تحميل الرصيد",
+    "transferDetails": {
+      "title": "تفاصيل التحويل",
+      "description": "أدخل معلومات المستلم ومبلغ التحويل",
+      "recipientName": "اسم المستلم",
+      "recipientNamePlaceholder": "أدخل الاسم الكامل للمستلم",
+      "bankName": "اسم البنك",
+      "bankNamePlaceholder": "أدخل اسم البنك",
+      "accountNumber": "رقم الحساب",
+      "accountNumberPlaceholder": "أدخل رقم حساب المستلم",
+      "amount": "المبلغ",
+      "amountPlaceholder": "0.00",
+      "description": "الوصف (اختياري)",
+      "descriptionPlaceholder": "ما الغرض من هذا التحويل؟"
+    },
+    "summary": {
+      "transferFee": "رسوم التحويل",
+      "totalAmount": "المبلغ الإجمالي"
+    },
+    "buttons": {
+      "processing": "جاري المعالجة...",
+      "transfer": "تحويل الأموال"
+    },
+    "errors": {
+      "fillRequired": "الرجاء ملء جميع الحقول المطلوبة.",
+      "invalidAmount": "الرجاء إدخال مبلغ صالح.",
+      "insufficientBalance": "رصيد غير كافٍ لهذا التحويل.",
+      "invalidAccountNumber": "يجب أن يكون رقم الحساب 8 أرقام."
+    },
+    "securityNotice": {
+      "title": "تنبيه أمني:",
+      "message": "تحقق دائمًا من تفاصيل المستلم قبل التحويل. لا يمكن التراجع عن التحويلات بمجرد اكتمالها."
+    }
+  },
+  "PinConfirmation": {
+    "title": "تأكيد المعاملة",
+    "description": "أدخل رقم التعريف الشخصي الخاص بك للموافقة على هذه المعاملة",
+    "transactionSummary": "ملخص المعاملة",
+    "type": "النوع",
+    "transfer": "تحويل",
+    "recipient": "المستلم",
+    "bank": "البنك",
+    "accountNumber": "رقم الحساب",
+    "description": "الوصف",
+    "amount": "المبلغ",
+    "transactionPin": "رقم التعريف الشخصي للمعاملة",
+    "pinPlaceholder": "أدخل رقم التعريف الشخصي المكون من 4 أرقام",
+    "buttons": {
+      "back": "رجوع",
+      "confirming": "جاري التأكيد...",
+      "confirm": "تأكيد المعاملة"
+    },
+    "securityMessage": "رقم التعريف الشخصي الخاص بك مشفر وآمن. لا تشارك رقم التعريف الشخصي الخاص بك مع أي شخص.",
+    "loading": "جاري التحميل..."
+  },
+  "IMFVerification": {
+    "title": "التحقق من IMF مطلوب",
+    "description": "يتطلب حسابك التحقق من رمز IMF لإكمال هذه المعاملة",
+    "accountRestricted": {
+      "title": "الحساب مقيد",
+      "message": "نظرًا للإجراءات الأمنية، يتطلب حسابك رمز تحقق IMF (صندوق النقد الدولي) للمتابعة مع التحويلات. يرجى الاتصال بالدعم الخاص بك على help.galactostrustbacorp@gmail.com للحصول على هذا الرمز."
+    },
+    "enterCode": {
+      "title": "أدخل رمز IMF",
+      "description": "أدخل الرمز المكون من 4 أرقام الذي قدمه المسؤول الخاص بك",
+      "label": "رمز التحقق من IMF",
+      "placeholder": "0000",
+      "hint": "أدخل الأرقام الأربعة فقط (على سبيل المثال، إذا كان الرمز IMF-8798، أدخل 8798)"
+    },
+    "buttons": {
+      "verifying": "جاري التحقق...",
+      "verify": "تحقق ومتابعة",
+      "cancel": "إلغاء التحويل"
+    },
+    "howToGet": {
+      "title": "كيفية الحصول على رمز IMF الخاص بك:",
+      "step1": "اتصل بدعم البنك الخاص بك للاستفسار عن IMF",
+      "step2": "البريد الإلكتروني للدعم على support.galactostrustbacorp@gmail.com",
+      "step3": "أو انتقل إلى شريط القوائم وانقر على الدعم.",
+      "step4": "أدخل الجزء الرقمي المكون من 4 أرقام فقط"
+    },
+    "securityNotice": {
+      "title": "تنبيه أمني:",
+      "message": "لا تشارك بيانات اعتماد حسابك أبدًا. سيوفر موظفو GalactosTrust رمز IMF ولكن لن يطلبوا كلمة المرور الخاصة بك أبدًا."
+    },
+    "errors": {
+      "enterCode": "الرجاء إدخال رمز IMF المكون من 4 أرقام",
+      "invalidCode": "رمز IMF غير صالح",
+      "transferDataNotFound": "لم يتم العثور على بيانات التحويل. الرجاء المحاولة مرة أخرى.",
+      "transferFailed": "فشل التحويل. الرجاء المحاولة مرة أخرى.",
+      "networkError": "خطأ في الشبكة. الرجاء المحاولة مرة أخرى."
+    }
+  },
+  "TransferSuccess": {
+    "titlePending": "التحويل في انتظار الموافقة",
+    "titleCompleted": "إيصال المعاملة",
+    "descriptionPending": "تحويلك في انتظار الموافقة",
+    "receiptFor": "إيصال المعاملة",
+    "transactionDetails": "تفاصيل المعاملة",
+    "transactionId": "معرف المعاملة",
+    "transactionType": "نوع المعاملة",
+    "transfer": "تحويل",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "recipientInfo": "معلومات المستلم",
+    "accountName": "اسم الحساب",
+    "bank": "البنك",
+    "accountNumber": "رقم الحساب",
+    "paymentDetails": "تفاصيل الدفع",
+    "transferAmount": "مبلغ التحويل",
+    "transactionFee": "رسوم المعاملة",
+    "balanceBefore": "الرصيد السابق",
+    "balanceAfter": "الرصيد اللاحق",
+    "buttons": {
+      "back": "رجوع",
+      "backToDashboard": "العودة إلى لوحة التحكم"
+    },
+    "officialReceipt": "هذا إيصال رسمي لمعاملتك. احتفظ به لسجلاتك. إذا كانت لديك أي أسئلة، يرجى الاتصال بفريق الدعم لدينا.",
+    "loading": "جاري التحميل...",
+    "status": {
+      "pending": "قيد الانتظار",
+      "completed": "مكتمل",
+      "failed": "فشل"
+    }
+  },
+  "TransactionReceipt": {
+    "title": "إيصال المعاملة",
+    "receiptFor": "إيصال المعاملة",
+    "transactionDetails": "تفاصيل المعاملة",
+    "transactionId": "معرف المعاملة",
+    "transactionType": "نوع المعاملة",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "description": "الوصف",
+    "from": "من",
+    "to": "إلى",
+    "accountName": "اسم الحساب",
+    "email": "البريد الإلكتروني",
+    "bank": "البنك",
+    "accountNumber": "رقم الحساب",
+    "paymentDetails": "تفاصيل الدفع",
+    "receivedAmount": "المبلغ المستلم",
+    "transferAmount": "مبلغ التحويل",
+    "transactionFee": "رسوم المعاملة",
+    "balanceBefore": "الرصيد السابق",
+    "balanceAfter": "الرصيد اللاحق",
+    "officialReceipt": "هذا إيصال رسمي لمعاملتك. احتفظ به لسجلاتك. إذا كانت لديك أي أسئلة، يرجى الاتصال بفريق الدعم لدينا.",
+    "status": {
+      "completed": "مكتمل",
+      "pending": "قيد الانتظار",
+      "failed": "فشل"
+    }
+  },
+  "ReceiptActions": {
+    "back": "رجوع",
+    "backToDashboard": "العودة إلى لوحة التحكم"
+  }
+}
